@@ -58,6 +58,24 @@ void DisplaySensorMessage(EgmSensor *pSensorMessage)
     }
 }
 
+// Display inbound robot joints message
+void DisplaySensorJointsMessage(EgmSensor *pSensorMessage)
+{
+    if (pSensorMessage->has_header() && pSensorMessage->header().has_seqno() && pSensorMessage->header().has_tm() && pSensorMessage->header().has_mtype())
+    {
+        printf("SeqNo=%d Tm=%u Type=%d\n", pSensorMessage->header().seqno(), pSensorMessage->header().tm(), pSensorMessage->header().mtype());
+        int size=pSensorMessage->planned().joints().joints_size();
+        for(int i =0; i<size; i++)
+        {
+            printf("EgmJoints joint%d=%lf\n", i+1,pSensorMessage->planned().joints().joints(i));
+        }
+    }
+    else
+    {
+        printf("No header\n");
+    }
+}
+
 int main()
 {
  /* 服务端地址 */
@@ -104,7 +122,7 @@ pRobotMessage->SerializeToString(&messageBuffer);
      // deserialize inbound message
       EgmSensor *pSensorMessage = new EgmSensor();
       pSensorMessage->ParseFromArray(protoMessage, n);
-      DisplaySensorMessage(pSensorMessage);
+      DisplaySensorJointsMessage(pSensorMessage);
       delete pSensorMessage;
  }
 
