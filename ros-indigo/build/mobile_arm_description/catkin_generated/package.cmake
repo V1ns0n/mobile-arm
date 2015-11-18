@@ -1,0 +1,7 @@
+set(_CATKIN_CURRENT_PACKAGE "mobile_arm_description")
+set(mobile_arm_description_MAINTAINER "v1ns0n <v1ns0n@todo.todo>")
+set(mobile_arm_description_DEPRECATED "")
+set(mobile_arm_description_VERSION "0.0.0")
+set(mobile_arm_description_BUILD_DEPENDS "urdf")
+set(mobile_arm_description_RUN_DEPENDS "urdf")
+set(mobile_arm_description_BUILDTOOL_DEPENDS "catkin")

@@ -1,0 +1,2 @@
+mobile_arm_description
+-DCATKIN_DEVEL_PREFIX=/home/v1ns0n/mobile-arm/ros-indigo/devel -DCMAKE_INSTALL_PREFIX=/home/v1ns0n/mobile-arm/ros-indigo/install -G Unix Makefiles

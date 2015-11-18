@@ -1,0 +1,8 @@
+prefix=/home/v1ns0n/mobile-arm/ros-indigo/devel
+
+Name: mobile_arm_description
+Description: Description of mobile_arm_description
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/v1ns0n/mobile-arm/ros-indigo/devel/lib 
+Requires: 

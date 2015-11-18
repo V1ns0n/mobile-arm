@@ -1,0 +1,163 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface" name="irb1200">
+
+<xacro:property name="wheeloffsetX" value="0.38" />
+<xacro:property name="wheeloffsetY" value="0.308" />
+<xacro:property name="wheeloffsetZ" value="0.093" />
+	<xacro:macro name="arm_link" params="name rpy xyz filename collisionfile *material">
+		<link name="${name}">	
+			<visual>
+				<geometry>
+					<mesh filename="${filename}"/>
+				</geometry>
+			<origin rpy="${rpy}" xyz="${xyz}"/>
+			<xacro:insert_block name="material"/>
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="${collisionfile}"/>
+				</geometry>
+			</collision>
+		</link>
+	</xacro:macro>
+
+	<xacro:macro name="arm_joint" params="name type o_xyz o_rpy a_xyz effort lower upper velocity p_link c_link">
+		<joint name="${name}" type="${type}">
+			<axis xyz="${a_xyz}"/>
+			<limit effort="${effort}" lower="${lower}" upper="${upper}" velocity="${velocity}"/>
+			<parent link="${p_link}"/>
+			<child link="${c_link}"/>
+			<origin rpy="${o_rpy}" xyz="${o_xyz}"/>
+		</joint>
+	</xacro:macro>
+
+	<xacro:macro name="wheel_joint" params="name type o_xyz o_rpy a_xyz effort velocity p_link c_link">
+		<joint name="${name}" type="${type}">
+			<axis xyz="${a_xyz}"/>
+			<limit effort="${effort}" velocity="${velocity}"/>
+			<parent link="${p_link}"/>
+			<child link="${c_link}"/>
+			<origin rpy="${o_rpy}" xyz="${o_xyz}"/>
+		</joint>
+	</xacro:macro>
+
+        <!--link description-->
+
+	<link name="tool0"/>
+	<link name="base"/>
+
+	<xacro:arm_link name="base_link" rpy="0 0 0" xyz="0 0 0.034" filename="package://mobile_arm_description/meshes/visual/mobilebase.STL" collisionfile="package://mobile_arm_description/meshes/collision/mobilebasemesh.stl">
+		<material name="grey">
+	            <color rgba="0.7 0.7 0.7 1"/>
+	        </material>
+        </xacro:arm_link>
+
+        <xacro:arm_link name="wheelLF" rpy="0 0 0" xyz="0 0 0" filename="package://mobile_arm_description/meshes/visual/wheel.STL" collisionfile="package://mobile_arm_description/meshes/collision/wheelmesh.stl">
+		<material name="black">
+	            <color rgba="0 0 0 1"/>
+	        </material>
+        </xacro:arm_link>
+
+        <xacro:arm_link name="wheelRF" rpy="0 0 0" xyz="0 0 0" filename="package://mobile_arm_description/meshes/visual/wheel.STL" collisionfile="package://mobile_arm_description/meshes/collision/wheelmesh.stl">
+		<material name="black">
+	            <color rgba="0 0 0 1"/>
+	        </material>
+        </xacro:arm_link>
+
+        <xacro:arm_link name="wheelLB" rpy="0 0 0" xyz="0 0 0" filename="package://mobile_arm_description/meshes/visual/wheel.STL" collisionfile="package://mobile_arm_description/meshes/collision/wheelmesh.stl">
+		<material name="black">
+	            <color rgba="0 0 0 1"/>
+	        </material>
+        </xacro:arm_link>
+
+        <xacro:arm_link name="wheelRB" rpy="0 0 0" xyz="0 0 0" filename="package://mobile_arm_description/meshes/visual/wheel.STL" collisionfile="package://mobile_arm_description/meshes/collision/wheelmesh.stl">
+		<material name="black">
+	            <color rgba="0 0 0 1"/>
+	        </material>
+        </xacro:arm_link>
+
+	<xacro:arm_link name="link_0" rpy="0 0 0" xyz="0 0 0" filename="package://mobile_arm_description/meshes/visual/IRB1200_7-705-90_IRC5_Base_Standard_rev0.STL" collisionfile="package://mobile_arm_description/meshes/collision/baselink.stl">
+		<material name="orange">
+	            <color rgba="1 0.5 0 1"/>
+	        </material>
+        </xacro:arm_link>
+
+	<xacro:arm_link name="link_1" rpy="0 0 0" xyz="0 0 0" filename="package://mobile_arm_description/meshes/visual/IRB1200_7-705-90_IRC5_Link1_rev0.STL" collisionfile="package://mobile_arm_description/meshes/collision/link1.stl">
+		<material name="orange">
+	            <color rgba="1 0.5 0 1"/>
+	        </material>
+        </xacro:arm_link>
+
+	<xacro:arm_link name="link_2" rpy="0 0 0" xyz="0 0 0" filename="package://mobile_arm_description/meshes/visual/IRB1200_5-90_IRC5_Link2_rev0.STL" collisionfile="package://mobile_arm_description/meshes/collision/link2.stl">
+		<material name="orange">
+	            <color rgba="1 0.5 0 1"/>
+	        </material>
+        </xacro:arm_link>
+
+	<xacro:arm_link name="link_3" rpy="0 0 0" xyz="0 0 0" filename="package://mobile_arm_description/meshes/visual/IRB1200_5-90_IRC5_Link3_rev0.STL" collisionfile="package://mobile_arm_description/meshes/collision/link3.stl">
+		<material name="orange">
+	            <color rgba="1 0.5 0 1"/>
+	        </material>
+        </xacro:arm_link>
+
+	<xacro:arm_link name="link_4" rpy="0 0 0" xyz="0 0 0" filename="package://mobile_arm_description/meshes/visual/IRB1200_5-90_IRC5_Link4_rev0.STL" collisionfile="package://mobile_arm_description/meshes/collision/link4.stl">
+		<material name="orange">
+	            <color rgba="1 0.5 0 1"/>
+	        </material>
+        </xacro:arm_link>
+
+	<xacro:arm_link name="link_5" rpy="0 0 0" xyz="0 0 0" filename="package://mobile_arm_description/meshes/visual/IRB1200_5-90_IRC5_Link5_rev0.STL" collisionfile="package://mobile_arm_description/meshes/collision/link5.stl">
+		<material name="orange">
+	            <color rgba="1 0.5 0 1"/>
+	        </material>
+        </xacro:arm_link>
+
+	<xacro:arm_link name="link_6" rpy="0 0 0" xyz="0 0 0" filename="package://mobile_arm_description/meshes/visual/IRB1200_5-90_IRC5_Link6_rev0.STL" collisionfile="package://mobile_arm_description/meshes/collision/link6.stl">
+		<material name="orange">
+	            <color rgba="1 0.5 0 1"/>
+	        </material>
+        </xacro:arm_link>
+
+
+        <!--joint description-->
+
+        <joint name="link_0-base" type="fixed">
+        	<parent link="link_0"/>
+        	<child link="base"/>
+        	<origin xyz="0 0 0" rpy="0 0 0"/>
+        </joint>
+
+         <joint name="link_6-tool0" type="fixed">
+        	<parent link="link_6"/>
+        	<child link="tool0"/>
+        	<origin xyz="0 0 0" rpy="0 0 0"/>
+        </joint>
+
+        <joint name="link_0-base_link" type="fixed">
+        	<parent link="base_link"/>
+        	<child link="link_0"/>
+        	<origin xyz="0.182 0 0.677" rpy="0 0 0"/>
+        </joint>
+
+	<xacro:arm_joint name="joint_1" type="revolute" o_xyz="0 0 0.219" o_rpy="0 0 0" a_xyz="0 0 1" effort="1000.0" lower="-2.967" upper="2.967" velocity="5.026" p_link="link_0" c_link="link_1"/>
+
+	<xacro:arm_joint name="joint_2" type="revolute" o_xyz="0 0 0.18" o_rpy="0 0 0" a_xyz="0 1 0" effort="1000.0" lower="-1.745" upper="2.269" velocity="4.188" p_link="link_1" c_link="link_2"/>
+
+	<xacro:arm_joint name="joint_3" type="revolute" o_xyz="0 0 0.448" o_rpy="0 0 0" a_xyz="0 1 0" effort="1000.0" lower="-3.491" upper="1.222" velocity="5.236" p_link="link_2" c_link="link_3"/>
+
+	<xacro:arm_joint name="joint_4" type="revolute" o_xyz="0.2885 0 0.042" o_rpy="0 0 0" a_xyz="1 0 0" effort="1000.0" lower="-4.712" upper="4.712" velocity="6.98" p_link="link_3" c_link="link_4"/>
+
+	<xacro:arm_joint name="joint_5" type="revolute" o_xyz="0.1625 0 0" o_rpy="0 0 0" a_xyz="0 1 0" effort="1000.0" lower="-2.269" upper="2.269" velocity="7.068" p_link="link_4" c_link="link_5"/>
+
+	<xacro:arm_joint name="joint_6" type="revolute" o_xyz="0.082 0 0" o_rpy="0 0 0" a_xyz="1 0 0" effort="1000.0" lower="-6.28" upper="6.28" velocity="10.47" p_link="link_5" c_link="link_6"/>
+
+	<xacro:wheel_joint name="wheelLFJ" type="continuous" o_xyz="${wheeloffsetX} ${wheeloffsetY} ${wheeloffsetZ}" o_rpy="0 0 0" a_xyz="0 1 0" effort="1000.0" velocity="15" p_link="base_link" c_link="wheelLF"/>	
+
+	<xacro:wheel_joint name="wheelLBJ" type="continuous" o_xyz="-${wheeloffsetX} ${wheeloffsetY} ${wheeloffsetZ}" o_rpy="0 0 0" a_xyz="0 1 0" effort="1000.0" velocity="15" p_link="base_link" c_link="wheelLB"/>	
+
+	<xacro:wheel_joint name="wheelRFJ" type="continuous" o_xyz="${wheeloffsetX} -${wheeloffsetY} ${wheeloffsetZ}" o_rpy="0 0 0" a_xyz="0 1 0" effort="1000.0" velocity="15" p_link="base_link" c_link="wheelRF"/>	
+
+	<xacro:wheel_joint name="wheelRBJ" type="continuous" o_xyz="-${wheeloffsetX} -${wheeloffsetY} ${wheeloffsetZ}" o_rpy="0 0 0" a_xyz="0 1 0" effort="1000.0" velocity="15" p_link="base_link" c_link="wheelRB"/>	
+
+</robot>
