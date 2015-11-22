@@ -28,8 +28,8 @@ unsigned long GetTickCount()
      return (ts.tv_sec * 1000 + ts.tv_nsec / 1000000);
 }
 
-// Create a simple sensor message
-void CreateSensorMessage(EgmSensor* pSensorMessage,double pose[])
+// Create a simple sensor cartesian speed message
+void CreateSensorCSpeedMessage(EgmSensor* pSensorMessage,double pose[])
 {
     EgmHeader* header = new EgmHeader();
     header->set_mtype(EgmHeader_MessageType_MSGTYPE_CORRECTION);
@@ -38,32 +38,20 @@ void CreateSensorMessage(EgmSensor* pSensorMessage,double pose[])
 
     pSensorMessage->set_allocated_header(header);
 
-    EgmCartesian *pc = new EgmCartesian();
-    pc->set_x(pose[0]);
-    pc->set_y(pose[1]);
-    pc->set_z(pose[2]);
+    EgmCartesianSpeed *cs = new EgmCartesianSpeed();
+    for (int i=0; i<6; i++)
+    {
+        cs->add_value(pose[i]);
+      }
+    EgmSpeedRef *sr = new EgmSpeedRef();
+    sr->set_allocated_cartesians(cs);
 
-    EgmQuaternion *pq = new EgmQuaternion();
-    pq->set_u0(1.0);
-    pq->set_u1(0.0);
-    pq->set_u2(0.0);
-    pq->set_u3(0.0);
-
-    EgmPose *pcartesian = new EgmPose();
-    pcartesian->set_allocated_orient(pq);
-    pcartesian->set_allocated_pos(pc);
-
-    EgmPlanned *planned = new EgmPlanned();
-    planned->set_allocated_cartesian(pcartesian);
-
-    pSensorMessage->set_allocated_planned(planned);
+    pSensorMessage->set_allocated_speedref(sr);
 }
 
-// Create a joint message
-void CreateSensorJointsMessage(EgmSensor* pSensorMessage,double joints[])
+// Create a simple sensor joints speed message
+void CreateSensorJSpeedMessage(EgmSensor* pSensorMessage,double pose[])
 {
-    int size = sizeof(joints);
-    size=size>6? 6:size;
     EgmHeader* header = new EgmHeader();
     header->set_mtype(EgmHeader_MessageType_MSGTYPE_CORRECTION);
     header->set_seqno(sequenceNumber++);
@@ -71,15 +59,15 @@ void CreateSensorJointsMessage(EgmSensor* pSensorMessage,double joints[])
 
     pSensorMessage->set_allocated_header(header);
 
-    EgmJoints* pj = new EgmJoints();
-    for(int i =0; i<size; i++)
+    EgmJoints *js = new EgmJoints();
+    for (int i=0; i<6; i++)
     {
-         pj->add_joints(joints[i]);
-    }
-    EgmPlanned *planned = new EgmPlanned();
-    planned->set_allocated_joints(pj);
+        js->add_joints(pose[i]);
+      }
+    EgmSpeedRef *sr = new EgmSpeedRef();
+    sr->set_allocated_joints(js);
 
-    pSensorMessage->set_allocated_planned(planned);
+    pSensorMessage->set_allocated_speedref(sr);
 }
 
 // Display inbound robot message
@@ -146,14 +134,13 @@ int main()
   DisplayRobotMessage(pRobotMessage);
   delete pRobotMessage;*/
    int count=60;
-   double pose[3]={1.0,2.0,3.0};
-   double joints[6]={0.1,0.2,0.3,0.4,0.5,0.6};
- while(count>0)
+   double pose[6]={3,3,3,3,3,3};
+while(count>0)
  {
        string messageBuffer;
        // create and send a sensor message
       EgmSensor *pSensorMessage = new EgmSensor();
-      CreateSensorJointsMessage(pSensorMessage,joints);
+      CreateSensorJSpeedMessage(pSensorMessage,pose);
       pSensorMessage->SerializeToString(&messageBuffer);
 
       //send a message to robot
@@ -164,10 +151,11 @@ int main()
        }
        delete pSensorMessage;
        //count--;
-       //for(int i=0;i<6;i++)
-           joints[0]+=1;
+       //for(int i=0;i<3;i++)
+           //pose[i]+=0.1;
      sleep(1);
- }
+     //while(1){}
+}
 
  close(server_socket_fd);
  return 0;

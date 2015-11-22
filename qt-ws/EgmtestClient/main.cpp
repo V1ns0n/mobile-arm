@@ -76,6 +76,42 @@ void DisplaySensorJointsMessage(EgmSensor *pSensorMessage)
     }
 }
 
+// Display inbound robot cartisian speed message
+void DisplaySensorCSpeedMessage(EgmSensor *pSensorMessage)
+{
+    if (pSensorMessage->has_header() && pSensorMessage->header().has_seqno() && pSensorMessage->header().has_tm() && pSensorMessage->header().has_mtype())
+    {
+        printf("SeqNo=%d Tm=%u Type=%d\n", pSensorMessage->header().seqno(), pSensorMessage->header().tm(), pSensorMessage->header().mtype());
+        int size=pSensorMessage->speedref().cartesians().value_size();
+        for(int i =0; i<size; i++)
+        {
+            printf("EgmSpeedRef Cartesian Speed%d=%lf\n", i+1,pSensorMessage->speedref().cartesians().value(i));
+        }
+    }
+    else
+    {
+        printf("No header\n");
+    }
+}
+
+// Display inbound robot joints speed message
+void DisplaySensorJSpeedMessage(EgmSensor *pSensorMessage)
+{
+    if (pSensorMessage->has_header() && pSensorMessage->header().has_seqno() && pSensorMessage->header().has_tm() && pSensorMessage->header().has_mtype())
+    {
+        printf("SeqNo=%d Tm=%u Type=%d\n", pSensorMessage->header().seqno(), pSensorMessage->header().tm(), pSensorMessage->header().mtype());
+        int size=pSensorMessage->speedref().joints().joints_size();
+        for(int i =0; i<size; i++)
+        {
+            printf("EgmSpeedRef Joints Speed%d=%lf\n", i+1,pSensorMessage->speedref().joints().joints(i));
+        }
+    }
+    else
+    {
+        printf("No header\n");
+    }
+}
+
 int main()
 {
  /* 服务端地址 */
@@ -122,7 +158,7 @@ pRobotMessage->SerializeToString(&messageBuffer);
      // deserialize inbound message
       EgmSensor *pSensorMessage = new EgmSensor();
       pSensorMessage->ParseFromArray(protoMessage, n);
-      DisplaySensorJointsMessage(pSensorMessage);
+      DisplaySensorJSpeedMessage(pSensorMessage);
       delete pSensorMessage;
  }
 

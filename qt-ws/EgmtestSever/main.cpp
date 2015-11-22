@@ -123,9 +123,9 @@ int main()
   DisplayRobotMessage(pRobotMessage);
   delete pRobotMessage;*/
    int count=60;
-   double pose[3]={1.0,2.0,3.0};
- while(count>0)
- {
+   double pose[3]={1000,0,0};
+ //while(count>0)
+ //{
        string messageBuffer;
        // create and send a sensor message
       EgmSensor *pSensorMessage = new EgmSensor();
@@ -140,10 +140,11 @@ int main()
        }
        delete pSensorMessage;
        count--;
-       for(int i=0;i<3;i++)
-           pose[i]+=0.1;
+      // for(int i=0;i<3;i++)
+          // pose[i]+=0.1;
      sleep(1);
- }
+     while(1){}
+ //}
 
  close(server_socket_fd);
  return 0;

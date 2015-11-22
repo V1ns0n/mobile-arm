@@ -1,7 +1,7 @@
 QT += core
 QT -= gui
 
-TARGET = Egm_joint_test
+TARGET = EgmSpeedTest
 CONFIG += console
 CONFIG -= app_bundle
 
@@ -10,11 +10,9 @@ TEMPLATE = app
 SOURCES += main.cpp \
     egm.pb.cc
 
-
-
-
 HEADERS += \
     egm.pb.h
+
 
 unix:!macx: LIBS += -L$$PWD/../../../../../usr/local/lib/ -lprotobuf
 
