@@ -119,7 +119,7 @@ int main()
  socklen_t server_addr_length = sizeof(server_addr);
  bzero(&server_addr, sizeof(server_addr));
  server_addr.sin_family = AF_INET;
- server_addr.sin_addr.s_addr = inet_addr("192.168.1.19");
+ server_addr.sin_addr.s_addr = inet_addr("192.168.220.128");
  server_addr.sin_port = htons(SERVER_PORT);
 
  /* 创建socket */

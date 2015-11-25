@@ -13,12 +13,10 @@ SOURCES += main.cpp \
 
 
 
-HEADERS += \
-    egm.pb.h
 
-unix:!macx: LIBS += -L$$PWD/../../../../../usr/local/lib/ -lprotobuf
+unix:!macx: LIBS += -L$$PWD/../../../../../usr/lib/x86_64-linux-gnu/ -lprotobuf
 
-INCLUDEPATH += $$PWD/../../../../../usr/local/include
-DEPENDPATH += $$PWD/../../../../../usr/local/include
+INCLUDEPATH += $$PWD/../../../../../usr/lib/x86_64-linux-gnu
+DEPENDPATH += $$PWD/../../../../../usr/lib/x86_64-linux-gnu
 
-unix:!macx: PRE_TARGETDEPS += $$PWD/../../../../../usr/local/lib/libprotobuf.a
+unix:!macx: PRE_TARGETDEPS += $$PWD/../../../../../usr/lib/x86_64-linux-gnu/libprotobuf.a

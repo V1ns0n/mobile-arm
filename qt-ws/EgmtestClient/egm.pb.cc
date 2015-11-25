@@ -655,7 +655,6 @@ const int EgmHeader::kMtypeFieldNumber;
 EgmHeader::EgmHeader()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:abb.egm.EgmHeader)
 }
 
 void EgmHeader::InitAsDefaultInstance() {
@@ -665,7 +664,6 @@ EgmHeader::EgmHeader(const EgmHeader& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:abb.egm.EgmHeader)
 }
 
 void EgmHeader::SharedCtor() {
@@ -677,7 +675,6 @@ void EgmHeader::SharedCtor() {
 }
 
 EgmHeader::~EgmHeader() {
-  // @@protoc_insertion_point(destructor:abb.egm.EgmHeader)
   SharedDtor();
 }
 
@@ -708,44 +705,31 @@ EgmHeader* EgmHeader::New() const {
 }
 
 void EgmHeader::Clear() {
-#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
-  &reinterpret_cast<EgmHeader*>(16)->f) - \
-   reinterpret_cast<char*>(16))
-
-#define ZR_(first, last) do {                              \
-    size_t f = OFFSET_OF_FIELD_(first);                    \
-    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
-    ::memset(&first, 0, n);                                \
-  } while (0)
-
-  ZR_(seqno_, mtype_);
-
-#undef OFFSET_OF_FIELD_
-#undef ZR_
-
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    seqno_ = 0u;
+    tm_ = 0u;
+    mtype_ = 0;
+  }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
 
 bool EgmHeader::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:abb.egm.EgmHeader)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
+  while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // optional uint32 seqno = 1;
       case 1: {
-        if (tag == 8) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &seqno_)));
           set_has_seqno();
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(16)) goto parse_tm;
         break;
@@ -753,14 +737,15 @@ bool EgmHeader::MergePartialFromCodedStream(
 
       // optional uint32 tm = 2;
       case 2: {
-        if (tag == 16) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_tm:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &tm_)));
           set_has_tm();
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(24)) goto parse_mtype;
         break;
@@ -768,7 +753,8 @@ bool EgmHeader::MergePartialFromCodedStream(
 
       // optional .abb.egm.EgmHeader.MessageType mtype = 3 [default = MSGTYPE_UNDEFINED];
       case 3: {
-        if (tag == 24) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_mtype:
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -780,18 +766,17 @@ bool EgmHeader::MergePartialFromCodedStream(
             mutable_unknown_fields()->AddVarint(3, value);
           }
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
-        if (input->ExpectAtEnd()) goto success;
+        if (input->ExpectAtEnd()) return true;
         break;
       }
 
       default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
+          return true;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -799,18 +784,12 @@ bool EgmHeader::MergePartialFromCodedStream(
       }
     }
   }
-success:
-  // @@protoc_insertion_point(parse_success:abb.egm.EgmHeader)
   return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:abb.egm.EgmHeader)
-  return false;
 #undef DO_
 }
 
 void EgmHeader::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:abb.egm.EgmHeader)
   // optional uint32 seqno = 1;
   if (has_seqno()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->seqno(), output);
@@ -831,12 +810,10 @@ void EgmHeader::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:abb.egm.EgmHeader)
 }
 
 ::google::protobuf::uint8* EgmHeader::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:abb.egm.EgmHeader)
   // optional uint32 seqno = 1;
   if (has_seqno()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->seqno(), target);
@@ -857,7 +834,6 @@ void EgmHeader::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:abb.egm.EgmHeader)
   return target;
 }
 
@@ -973,7 +949,6 @@ const int EgmCartesian::kZFieldNumber;
 EgmCartesian::EgmCartesian()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:abb.egm.EgmCartesian)
 }
 
 void EgmCartesian::InitAsDefaultInstance() {
@@ -983,7 +958,6 @@ EgmCartesian::EgmCartesian(const EgmCartesian& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:abb.egm.EgmCartesian)
 }
 
 void EgmCartesian::SharedCtor() {
@@ -995,7 +969,6 @@ void EgmCartesian::SharedCtor() {
 }
 
 EgmCartesian::~EgmCartesian() {
-  // @@protoc_insertion_point(destructor:abb.egm.EgmCartesian)
   SharedDtor();
 }
 
@@ -1026,44 +999,31 @@ EgmCartesian* EgmCartesian::New() const {
 }
 
 void EgmCartesian::Clear() {
-#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
-  &reinterpret_cast<EgmCartesian*>(16)->f) - \
-   reinterpret_cast<char*>(16))
-
-#define ZR_(first, last) do {                              \
-    size_t f = OFFSET_OF_FIELD_(first);                    \
-    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
-    ::memset(&first, 0, n);                                \
-  } while (0)
-
-  ZR_(x_, z_);
-
-#undef OFFSET_OF_FIELD_
-#undef ZR_
-
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    x_ = 0;
+    y_ = 0;
+    z_ = 0;
+  }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
 
 bool EgmCartesian::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:abb.egm.EgmCartesian)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
+  while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required double x = 1;
       case 1: {
-        if (tag == 9) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &x_)));
           set_has_x();
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(17)) goto parse_y;
         break;
@@ -1071,14 +1031,15 @@ bool EgmCartesian::MergePartialFromCodedStream(
 
       // required double y = 2;
       case 2: {
-        if (tag == 17) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
          parse_y:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &y_)));
           set_has_y();
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(25)) goto parse_z;
         break;
@@ -1086,25 +1047,25 @@ bool EgmCartesian::MergePartialFromCodedStream(
 
       // required double z = 3;
       case 3: {
-        if (tag == 25) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
          parse_z:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &z_)));
           set_has_z();
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
-        if (input->ExpectAtEnd()) goto success;
+        if (input->ExpectAtEnd()) return true;
         break;
       }
 
       default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
+          return true;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -1112,18 +1073,12 @@ bool EgmCartesian::MergePartialFromCodedStream(
       }
     }
   }
-success:
-  // @@protoc_insertion_point(parse_success:abb.egm.EgmCartesian)
   return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:abb.egm.EgmCartesian)
-  return false;
 #undef DO_
 }
 
 void EgmCartesian::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:abb.egm.EgmCartesian)
   // required double x = 1;
   if (has_x()) {
     ::google::protobuf::internal::WireFormatLite::WriteDouble(1, this->x(), output);
@@ -1143,12 +1098,10 @@ void EgmCartesian::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:abb.egm.EgmCartesian)
 }
 
 ::google::protobuf::uint8* EgmCartesian::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:abb.egm.EgmCartesian)
   // required double x = 1;
   if (has_x()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(1, this->x(), target);
@@ -1168,7 +1121,6 @@ void EgmCartesian::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:abb.egm.EgmCartesian)
   return target;
 }
 
@@ -1281,7 +1233,6 @@ const int EgmQuaternion::kU3FieldNumber;
 EgmQuaternion::EgmQuaternion()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:abb.egm.EgmQuaternion)
 }
 
 void EgmQuaternion::InitAsDefaultInstance() {
@@ -1291,7 +1242,6 @@ EgmQuaternion::EgmQuaternion(const EgmQuaternion& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:abb.egm.EgmQuaternion)
 }
 
 void EgmQuaternion::SharedCtor() {
@@ -1304,7 +1254,6 @@ void EgmQuaternion::SharedCtor() {
 }
 
 EgmQuaternion::~EgmQuaternion() {
-  // @@protoc_insertion_point(destructor:abb.egm.EgmQuaternion)
   SharedDtor();
 }
 
@@ -1335,44 +1284,32 @@ EgmQuaternion* EgmQuaternion::New() const {
 }
 
 void EgmQuaternion::Clear() {
-#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
-  &reinterpret_cast<EgmQuaternion*>(16)->f) - \
-   reinterpret_cast<char*>(16))
-
-#define ZR_(first, last) do {                              \
-    size_t f = OFFSET_OF_FIELD_(first);                    \
-    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
-    ::memset(&first, 0, n);                                \
-  } while (0)
-
-  ZR_(u0_, u3_);
-
-#undef OFFSET_OF_FIELD_
-#undef ZR_
-
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    u0_ = 0;
+    u1_ = 0;
+    u2_ = 0;
+    u3_ = 0;
+  }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
 
 bool EgmQuaternion::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:abb.egm.EgmQuaternion)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
+  while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required double u0 = 1;
       case 1: {
-        if (tag == 9) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &u0_)));
           set_has_u0();
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(17)) goto parse_u1;
         break;
@@ -1380,14 +1317,15 @@ bool EgmQuaternion::MergePartialFromCodedStream(
 
       // required double u1 = 2;
       case 2: {
-        if (tag == 17) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
          parse_u1:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &u1_)));
           set_has_u1();
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(25)) goto parse_u2;
         break;
@@ -1395,14 +1333,15 @@ bool EgmQuaternion::MergePartialFromCodedStream(
 
       // required double u2 = 3;
       case 3: {
-        if (tag == 25) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
          parse_u2:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &u2_)));
           set_has_u2();
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(33)) goto parse_u3;
         break;
@@ -1410,25 +1349,25 @@ bool EgmQuaternion::MergePartialFromCodedStream(
 
       // required double u3 = 4;
       case 4: {
-        if (tag == 33) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
          parse_u3:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &u3_)));
           set_has_u3();
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
-        if (input->ExpectAtEnd()) goto success;
+        if (input->ExpectAtEnd()) return true;
         break;
       }
 
       default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
+          return true;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -1436,18 +1375,12 @@ bool EgmQuaternion::MergePartialFromCodedStream(
       }
     }
   }
-success:
-  // @@protoc_insertion_point(parse_success:abb.egm.EgmQuaternion)
   return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:abb.egm.EgmQuaternion)
-  return false;
 #undef DO_
 }
 
 void EgmQuaternion::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:abb.egm.EgmQuaternion)
   // required double u0 = 1;
   if (has_u0()) {
     ::google::protobuf::internal::WireFormatLite::WriteDouble(1, this->u0(), output);
@@ -1472,12 +1405,10 @@ void EgmQuaternion::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:abb.egm.EgmQuaternion)
 }
 
 ::google::protobuf::uint8* EgmQuaternion::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:abb.egm.EgmQuaternion)
   // required double u0 = 1;
   if (has_u0()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(1, this->u0(), target);
@@ -1502,7 +1433,6 @@ void EgmQuaternion::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:abb.egm.EgmQuaternion)
   return target;
 }
 
@@ -1623,7 +1553,6 @@ const int EgmEuler::kZFieldNumber;
 EgmEuler::EgmEuler()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:abb.egm.EgmEuler)
 }
 
 void EgmEuler::InitAsDefaultInstance() {
@@ -1633,7 +1562,6 @@ EgmEuler::EgmEuler(const EgmEuler& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:abb.egm.EgmEuler)
 }
 
 void EgmEuler::SharedCtor() {
@@ -1645,7 +1573,6 @@ void EgmEuler::SharedCtor() {
 }
 
 EgmEuler::~EgmEuler() {
-  // @@protoc_insertion_point(destructor:abb.egm.EgmEuler)
   SharedDtor();
 }
 
@@ -1676,44 +1603,31 @@ EgmEuler* EgmEuler::New() const {
 }
 
 void EgmEuler::Clear() {
-#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
-  &reinterpret_cast<EgmEuler*>(16)->f) - \
-   reinterpret_cast<char*>(16))
-
-#define ZR_(first, last) do {                              \
-    size_t f = OFFSET_OF_FIELD_(first);                    \
-    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
-    ::memset(&first, 0, n);                                \
-  } while (0)
-
-  ZR_(x_, z_);
-
-#undef OFFSET_OF_FIELD_
-#undef ZR_
-
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    x_ = 0;
+    y_ = 0;
+    z_ = 0;
+  }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
 
 bool EgmEuler::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:abb.egm.EgmEuler)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
+  while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required double x = 1;
       case 1: {
-        if (tag == 9) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &x_)));
           set_has_x();
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(17)) goto parse_y;
         break;
@@ -1721,14 +1635,15 @@ bool EgmEuler::MergePartialFromCodedStream(
 
       // required double y = 2;
       case 2: {
-        if (tag == 17) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
          parse_y:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &y_)));
           set_has_y();
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(25)) goto parse_z;
         break;
@@ -1736,25 +1651,25 @@ bool EgmEuler::MergePartialFromCodedStream(
 
       // required double z = 3;
       case 3: {
-        if (tag == 25) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
          parse_z:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &z_)));
           set_has_z();
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
-        if (input->ExpectAtEnd()) goto success;
+        if (input->ExpectAtEnd()) return true;
         break;
       }
 
       default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
+          return true;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -1762,18 +1677,12 @@ bool EgmEuler::MergePartialFromCodedStream(
       }
     }
   }
-success:
-  // @@protoc_insertion_point(parse_success:abb.egm.EgmEuler)
   return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:abb.egm.EgmEuler)
-  return false;
 #undef DO_
 }
 
 void EgmEuler::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:abb.egm.EgmEuler)
   // required double x = 1;
   if (has_x()) {
     ::google::protobuf::internal::WireFormatLite::WriteDouble(1, this->x(), output);
@@ -1793,12 +1702,10 @@ void EgmEuler::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:abb.egm.EgmEuler)
 }
 
 ::google::protobuf::uint8* EgmEuler::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:abb.egm.EgmEuler)
   // required double x = 1;
   if (has_x()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(1, this->x(), target);
@@ -1818,7 +1725,6 @@ void EgmEuler::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:abb.egm.EgmEuler)
   return target;
 }
 
@@ -1930,7 +1836,6 @@ const int EgmPose::kEulerFieldNumber;
 EgmPose::EgmPose()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:abb.egm.EgmPose)
 }
 
 void EgmPose::InitAsDefaultInstance() {
@@ -1943,7 +1848,6 @@ EgmPose::EgmPose(const EgmPose& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:abb.egm.EgmPose)
 }
 
 void EgmPose::SharedCtor() {
@@ -1955,7 +1859,6 @@ void EgmPose::SharedCtor() {
 }
 
 EgmPose::~EgmPose() {
-  // @@protoc_insertion_point(destructor:abb.egm.EgmPose)
   SharedDtor();
 }
 
@@ -1989,7 +1892,7 @@ EgmPose* EgmPose::New() const {
 }
 
 void EgmPose::Clear() {
-  if (_has_bits_[0 / 32] & 7) {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (has_pos()) {
       if (pos_ != NULL) pos_->::abb::egm::EgmCartesian::Clear();
     }
@@ -2006,21 +1909,18 @@ void EgmPose::Clear() {
 
 bool EgmPose::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:abb.egm.EgmPose)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
+  while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // optional .abb.egm.EgmCartesian pos = 1;
       case 1: {
-        if (tag == 10) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_pos()));
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(18)) goto parse_orient;
         break;
@@ -2028,12 +1928,13 @@ bool EgmPose::MergePartialFromCodedStream(
 
       // optional .abb.egm.EgmQuaternion orient = 2;
       case 2: {
-        if (tag == 18) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_orient:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_orient()));
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(26)) goto parse_euler;
         break;
@@ -2041,23 +1942,23 @@ bool EgmPose::MergePartialFromCodedStream(
 
       // optional .abb.egm.EgmEuler euler = 3;
       case 3: {
-        if (tag == 26) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_euler:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_euler()));
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
-        if (input->ExpectAtEnd()) goto success;
+        if (input->ExpectAtEnd()) return true;
         break;
       }
 
       default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
+          return true;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -2065,18 +1966,12 @@ bool EgmPose::MergePartialFromCodedStream(
       }
     }
   }
-success:
-  // @@protoc_insertion_point(parse_success:abb.egm.EgmPose)
   return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:abb.egm.EgmPose)
-  return false;
 #undef DO_
 }
 
 void EgmPose::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:abb.egm.EgmPose)
   // optional .abb.egm.EgmCartesian pos = 1;
   if (has_pos()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
@@ -2099,12 +1994,10 @@ void EgmPose::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:abb.egm.EgmPose)
 }
 
 ::google::protobuf::uint8* EgmPose::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:abb.egm.EgmPose)
   // optional .abb.egm.EgmCartesian pos = 1;
   if (has_pos()) {
     target = ::google::protobuf::internal::WireFormatLite::
@@ -2130,7 +2023,6 @@ void EgmPose::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:abb.egm.EgmPose)
   return target;
 }
 
@@ -2254,7 +2146,6 @@ const int EgmCartesianSpeed::kValueFieldNumber;
 EgmCartesianSpeed::EgmCartesianSpeed()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:abb.egm.EgmCartesianSpeed)
 }
 
 void EgmCartesianSpeed::InitAsDefaultInstance() {
@@ -2264,7 +2155,6 @@ EgmCartesianSpeed::EgmCartesianSpeed(const EgmCartesianSpeed& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:abb.egm.EgmCartesianSpeed)
 }
 
 void EgmCartesianSpeed::SharedCtor() {
@@ -2273,7 +2163,6 @@ void EgmCartesianSpeed::SharedCtor() {
 }
 
 EgmCartesianSpeed::~EgmCartesianSpeed() {
-  // @@protoc_insertion_point(destructor:abb.egm.EgmCartesianSpeed)
   SharedDtor();
 }
 
@@ -2311,39 +2200,37 @@ void EgmCartesianSpeed::Clear() {
 
 bool EgmCartesianSpeed::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:abb.egm.EgmCartesianSpeed)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
+  while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // repeated double value = 1;
       case 1: {
-        if (tag == 9) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
          parse_value:
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  1, 9, input, this->mutable_value())));
-        } else if (tag == 10) {
+        } else if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag)
+                   == ::google::protobuf::internal::WireFormatLite::
+                      WIRETYPE_LENGTH_DELIMITED) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, this->mutable_value())));
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(9)) goto parse_value;
-        if (input->ExpectAtEnd()) goto success;
+        if (input->ExpectAtEnd()) return true;
         break;
       }
 
       default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
+          return true;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -2351,18 +2238,12 @@ bool EgmCartesianSpeed::MergePartialFromCodedStream(
       }
     }
   }
-success:
-  // @@protoc_insertion_point(parse_success:abb.egm.EgmCartesianSpeed)
   return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:abb.egm.EgmCartesianSpeed)
-  return false;
 #undef DO_
 }
 
 void EgmCartesianSpeed::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:abb.egm.EgmCartesianSpeed)
   // repeated double value = 1;
   for (int i = 0; i < this->value_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteDouble(
@@ -2373,12 +2254,10 @@ void EgmCartesianSpeed::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:abb.egm.EgmCartesianSpeed)
 }
 
 ::google::protobuf::uint8* EgmCartesianSpeed::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:abb.egm.EgmCartesianSpeed)
   // repeated double value = 1;
   for (int i = 0; i < this->value_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
@@ -2389,7 +2268,6 @@ void EgmCartesianSpeed::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:abb.egm.EgmCartesianSpeed)
   return target;
 }
 
@@ -2476,7 +2354,6 @@ const int EgmJoints::kJointsFieldNumber;
 EgmJoints::EgmJoints()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:abb.egm.EgmJoints)
 }
 
 void EgmJoints::InitAsDefaultInstance() {
@@ -2486,7 +2363,6 @@ EgmJoints::EgmJoints(const EgmJoints& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:abb.egm.EgmJoints)
 }
 
 void EgmJoints::SharedCtor() {
@@ -2495,7 +2371,6 @@ void EgmJoints::SharedCtor() {
 }
 
 EgmJoints::~EgmJoints() {
-  // @@protoc_insertion_point(destructor:abb.egm.EgmJoints)
   SharedDtor();
 }
 
@@ -2533,39 +2408,37 @@ void EgmJoints::Clear() {
 
 bool EgmJoints::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:abb.egm.EgmJoints)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
+  while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // repeated double joints = 1;
       case 1: {
-        if (tag == 9) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
          parse_joints:
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  1, 9, input, this->mutable_joints())));
-        } else if (tag == 10) {
+        } else if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag)
+                   == ::google::protobuf::internal::WireFormatLite::
+                      WIRETYPE_LENGTH_DELIMITED) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, this->mutable_joints())));
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(9)) goto parse_joints;
-        if (input->ExpectAtEnd()) goto success;
+        if (input->ExpectAtEnd()) return true;
         break;
       }
 
       default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
+          return true;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -2573,18 +2446,12 @@ bool EgmJoints::MergePartialFromCodedStream(
       }
     }
   }
-success:
-  // @@protoc_insertion_point(parse_success:abb.egm.EgmJoints)
   return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:abb.egm.EgmJoints)
-  return false;
 #undef DO_
 }
 
 void EgmJoints::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:abb.egm.EgmJoints)
   // repeated double joints = 1;
   for (int i = 0; i < this->joints_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteDouble(
@@ -2595,12 +2462,10 @@ void EgmJoints::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:abb.egm.EgmJoints)
 }
 
 ::google::protobuf::uint8* EgmJoints::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:abb.egm.EgmJoints)
   // repeated double joints = 1;
   for (int i = 0; i < this->joints_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
@@ -2611,7 +2476,6 @@ void EgmJoints::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:abb.egm.EgmJoints)
   return target;
 }
 
@@ -2698,7 +2562,6 @@ const int EgmExternalJoints::kJointsFieldNumber;
 EgmExternalJoints::EgmExternalJoints()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:abb.egm.EgmExternalJoints)
 }
 
 void EgmExternalJoints::InitAsDefaultInstance() {
@@ -2708,7 +2571,6 @@ EgmExternalJoints::EgmExternalJoints(const EgmExternalJoints& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:abb.egm.EgmExternalJoints)
 }
 
 void EgmExternalJoints::SharedCtor() {
@@ -2717,7 +2579,6 @@ void EgmExternalJoints::SharedCtor() {
 }
 
 EgmExternalJoints::~EgmExternalJoints() {
-  // @@protoc_insertion_point(destructor:abb.egm.EgmExternalJoints)
   SharedDtor();
 }
 
@@ -2755,39 +2616,37 @@ void EgmExternalJoints::Clear() {
 
 bool EgmExternalJoints::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:abb.egm.EgmExternalJoints)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
+  while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // repeated double joints = 1;
       case 1: {
-        if (tag == 9) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
          parse_joints:
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  1, 9, input, this->mutable_joints())));
-        } else if (tag == 10) {
+        } else if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag)
+                   == ::google::protobuf::internal::WireFormatLite::
+                      WIRETYPE_LENGTH_DELIMITED) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, this->mutable_joints())));
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(9)) goto parse_joints;
-        if (input->ExpectAtEnd()) goto success;
+        if (input->ExpectAtEnd()) return true;
         break;
       }
 
       default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
+          return true;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -2795,18 +2654,12 @@ bool EgmExternalJoints::MergePartialFromCodedStream(
       }
     }
   }
-success:
-  // @@protoc_insertion_point(parse_success:abb.egm.EgmExternalJoints)
   return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:abb.egm.EgmExternalJoints)
-  return false;
 #undef DO_
 }
 
 void EgmExternalJoints::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:abb.egm.EgmExternalJoints)
   // repeated double joints = 1;
   for (int i = 0; i < this->joints_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteDouble(
@@ -2817,12 +2670,10 @@ void EgmExternalJoints::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:abb.egm.EgmExternalJoints)
 }
 
 ::google::protobuf::uint8* EgmExternalJoints::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:abb.egm.EgmExternalJoints)
   // repeated double joints = 1;
   for (int i = 0; i < this->joints_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
@@ -2833,7 +2684,6 @@ void EgmExternalJoints::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:abb.egm.EgmExternalJoints)
   return target;
 }
 
@@ -2922,7 +2772,6 @@ const int EgmPlanned::kExternalJointsFieldNumber;
 EgmPlanned::EgmPlanned()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:abb.egm.EgmPlanned)
 }
 
 void EgmPlanned::InitAsDefaultInstance() {
@@ -2935,7 +2784,6 @@ EgmPlanned::EgmPlanned(const EgmPlanned& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:abb.egm.EgmPlanned)
 }
 
 void EgmPlanned::SharedCtor() {
@@ -2947,7 +2795,6 @@ void EgmPlanned::SharedCtor() {
 }
 
 EgmPlanned::~EgmPlanned() {
-  // @@protoc_insertion_point(destructor:abb.egm.EgmPlanned)
   SharedDtor();
 }
 
@@ -2981,7 +2828,7 @@ EgmPlanned* EgmPlanned::New() const {
 }
 
 void EgmPlanned::Clear() {
-  if (_has_bits_[0 / 32] & 7) {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (has_joints()) {
       if (joints_ != NULL) joints_->::abb::egm::EgmJoints::Clear();
     }
@@ -2998,21 +2845,18 @@ void EgmPlanned::Clear() {
 
 bool EgmPlanned::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:abb.egm.EgmPlanned)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
+  while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // optional .abb.egm.EgmJoints joints = 1;
       case 1: {
-        if (tag == 10) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_joints()));
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(18)) goto parse_cartesian;
         break;
@@ -3020,12 +2864,13 @@ bool EgmPlanned::MergePartialFromCodedStream(
 
       // optional .abb.egm.EgmPose cartesian = 2;
       case 2: {
-        if (tag == 18) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_cartesian:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_cartesian()));
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(26)) goto parse_externalJoints;
         break;
@@ -3033,23 +2878,23 @@ bool EgmPlanned::MergePartialFromCodedStream(
 
       // optional .abb.egm.EgmJoints externalJoints = 3;
       case 3: {
-        if (tag == 26) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_externalJoints:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_externaljoints()));
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
-        if (input->ExpectAtEnd()) goto success;
+        if (input->ExpectAtEnd()) return true;
         break;
       }
 
       default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
+          return true;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -3057,18 +2902,12 @@ bool EgmPlanned::MergePartialFromCodedStream(
       }
     }
   }
-success:
-  // @@protoc_insertion_point(parse_success:abb.egm.EgmPlanned)
   return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:abb.egm.EgmPlanned)
-  return false;
 #undef DO_
 }
 
 void EgmPlanned::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:abb.egm.EgmPlanned)
   // optional .abb.egm.EgmJoints joints = 1;
   if (has_joints()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
@@ -3091,12 +2930,10 @@ void EgmPlanned::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:abb.egm.EgmPlanned)
 }
 
 ::google::protobuf::uint8* EgmPlanned::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:abb.egm.EgmPlanned)
   // optional .abb.egm.EgmJoints joints = 1;
   if (has_joints()) {
     target = ::google::protobuf::internal::WireFormatLite::
@@ -3122,7 +2959,6 @@ void EgmPlanned::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:abb.egm.EgmPlanned)
   return target;
 }
 
@@ -3242,7 +3078,6 @@ const int EgmSpeedRef::kExternalJointsFieldNumber;
 EgmSpeedRef::EgmSpeedRef()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:abb.egm.EgmSpeedRef)
 }
 
 void EgmSpeedRef::InitAsDefaultInstance() {
@@ -3255,7 +3090,6 @@ EgmSpeedRef::EgmSpeedRef(const EgmSpeedRef& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:abb.egm.EgmSpeedRef)
 }
 
 void EgmSpeedRef::SharedCtor() {
@@ -3267,7 +3101,6 @@ void EgmSpeedRef::SharedCtor() {
 }
 
 EgmSpeedRef::~EgmSpeedRef() {
-  // @@protoc_insertion_point(destructor:abb.egm.EgmSpeedRef)
   SharedDtor();
 }
 
@@ -3301,7 +3134,7 @@ EgmSpeedRef* EgmSpeedRef::New() const {
 }
 
 void EgmSpeedRef::Clear() {
-  if (_has_bits_[0 / 32] & 7) {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (has_joints()) {
       if (joints_ != NULL) joints_->::abb::egm::EgmJoints::Clear();
     }
@@ -3318,21 +3151,18 @@ void EgmSpeedRef::Clear() {
 
 bool EgmSpeedRef::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:abb.egm.EgmSpeedRef)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
+  while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // optional .abb.egm.EgmJoints joints = 1;
       case 1: {
-        if (tag == 10) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_joints()));
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(18)) goto parse_cartesians;
         break;
@@ -3340,12 +3170,13 @@ bool EgmSpeedRef::MergePartialFromCodedStream(
 
       // optional .abb.egm.EgmCartesianSpeed cartesians = 2;
       case 2: {
-        if (tag == 18) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_cartesians:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_cartesians()));
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(26)) goto parse_externalJoints;
         break;
@@ -3353,23 +3184,23 @@ bool EgmSpeedRef::MergePartialFromCodedStream(
 
       // optional .abb.egm.EgmJoints externalJoints = 3;
       case 3: {
-        if (tag == 26) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_externalJoints:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_externaljoints()));
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
-        if (input->ExpectAtEnd()) goto success;
+        if (input->ExpectAtEnd()) return true;
         break;
       }
 
       default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
+          return true;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -3377,18 +3208,12 @@ bool EgmSpeedRef::MergePartialFromCodedStream(
       }
     }
   }
-success:
-  // @@protoc_insertion_point(parse_success:abb.egm.EgmSpeedRef)
   return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:abb.egm.EgmSpeedRef)
-  return false;
 #undef DO_
 }
 
 void EgmSpeedRef::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:abb.egm.EgmSpeedRef)
   // optional .abb.egm.EgmJoints joints = 1;
   if (has_joints()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
@@ -3411,12 +3236,10 @@ void EgmSpeedRef::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:abb.egm.EgmSpeedRef)
 }
 
 ::google::protobuf::uint8* EgmSpeedRef::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:abb.egm.EgmSpeedRef)
   // optional .abb.egm.EgmJoints joints = 1;
   if (has_joints()) {
     target = ::google::protobuf::internal::WireFormatLite::
@@ -3442,7 +3265,6 @@ void EgmSpeedRef::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:abb.egm.EgmSpeedRef)
   return target;
 }
 
@@ -3558,7 +3380,6 @@ const int EgmPathCorr::kAgeFieldNumber;
 EgmPathCorr::EgmPathCorr()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:abb.egm.EgmPathCorr)
 }
 
 void EgmPathCorr::InitAsDefaultInstance() {
@@ -3569,7 +3390,6 @@ EgmPathCorr::EgmPathCorr(const EgmPathCorr& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:abb.egm.EgmPathCorr)
 }
 
 void EgmPathCorr::SharedCtor() {
@@ -3580,7 +3400,6 @@ void EgmPathCorr::SharedCtor() {
 }
 
 EgmPathCorr::~EgmPathCorr() {
-  // @@protoc_insertion_point(destructor:abb.egm.EgmPathCorr)
   SharedDtor();
 }
 
@@ -3612,7 +3431,7 @@ EgmPathCorr* EgmPathCorr::New() const {
 }
 
 void EgmPathCorr::Clear() {
-  if (_has_bits_[0 / 32] & 3) {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (has_pos()) {
       if (pos_ != NULL) pos_->::abb::egm::EgmCartesian::Clear();
     }
@@ -3624,21 +3443,18 @@ void EgmPathCorr::Clear() {
 
 bool EgmPathCorr::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:abb.egm.EgmPathCorr)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
+  while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required .abb.egm.EgmCartesian pos = 1;
       case 1: {
-        if (tag == 10) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_pos()));
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(16)) goto parse_age;
         break;
@@ -3646,25 +3462,25 @@ bool EgmPathCorr::MergePartialFromCodedStream(
 
       // required uint32 age = 2;
       case 2: {
-        if (tag == 16) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_age:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &age_)));
           set_has_age();
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
-        if (input->ExpectAtEnd()) goto success;
+        if (input->ExpectAtEnd()) return true;
         break;
       }
 
       default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
+          return true;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -3672,18 +3488,12 @@ bool EgmPathCorr::MergePartialFromCodedStream(
       }
     }
   }
-success:
-  // @@protoc_insertion_point(parse_success:abb.egm.EgmPathCorr)
   return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:abb.egm.EgmPathCorr)
-  return false;
 #undef DO_
 }
 
 void EgmPathCorr::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:abb.egm.EgmPathCorr)
   // required .abb.egm.EgmCartesian pos = 1;
   if (has_pos()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
@@ -3699,12 +3509,10 @@ void EgmPathCorr::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:abb.egm.EgmPathCorr)
 }
 
 ::google::protobuf::uint8* EgmPathCorr::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:abb.egm.EgmPathCorr)
   // required .abb.egm.EgmCartesian pos = 1;
   if (has_pos()) {
     target = ::google::protobuf::internal::WireFormatLite::
@@ -3721,7 +3529,6 @@ void EgmPathCorr::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:abb.egm.EgmPathCorr)
   return target;
 }
 
@@ -3831,7 +3638,6 @@ const int EgmFeedBack::kExternalJointsFieldNumber;
 EgmFeedBack::EgmFeedBack()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:abb.egm.EgmFeedBack)
 }
 
 void EgmFeedBack::InitAsDefaultInstance() {
@@ -3844,7 +3650,6 @@ EgmFeedBack::EgmFeedBack(const EgmFeedBack& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:abb.egm.EgmFeedBack)
 }
 
 void EgmFeedBack::SharedCtor() {
@@ -3856,7 +3661,6 @@ void EgmFeedBack::SharedCtor() {
 }
 
 EgmFeedBack::~EgmFeedBack() {
-  // @@protoc_insertion_point(destructor:abb.egm.EgmFeedBack)
   SharedDtor();
 }
 
@@ -3890,7 +3694,7 @@ EgmFeedBack* EgmFeedBack::New() const {
 }
 
 void EgmFeedBack::Clear() {
-  if (_has_bits_[0 / 32] & 7) {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (has_joints()) {
       if (joints_ != NULL) joints_->::abb::egm::EgmJoints::Clear();
     }
@@ -3907,21 +3711,18 @@ void EgmFeedBack::Clear() {
 
 bool EgmFeedBack::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:abb.egm.EgmFeedBack)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
+  while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // optional .abb.egm.EgmJoints joints = 1;
       case 1: {
-        if (tag == 10) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_joints()));
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(18)) goto parse_cartesian;
         break;
@@ -3929,12 +3730,13 @@ bool EgmFeedBack::MergePartialFromCodedStream(
 
       // optional .abb.egm.EgmPose cartesian = 2;
       case 2: {
-        if (tag == 18) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_cartesian:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_cartesian()));
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(26)) goto parse_externalJoints;
         break;
@@ -3942,23 +3744,23 @@ bool EgmFeedBack::MergePartialFromCodedStream(
 
       // optional .abb.egm.EgmJoints externalJoints = 3;
       case 3: {
-        if (tag == 26) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_externalJoints:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_externaljoints()));
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
-        if (input->ExpectAtEnd()) goto success;
+        if (input->ExpectAtEnd()) return true;
         break;
       }
 
       default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
+          return true;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -3966,18 +3768,12 @@ bool EgmFeedBack::MergePartialFromCodedStream(
       }
     }
   }
-success:
-  // @@protoc_insertion_point(parse_success:abb.egm.EgmFeedBack)
   return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:abb.egm.EgmFeedBack)
-  return false;
 #undef DO_
 }
 
 void EgmFeedBack::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:abb.egm.EgmFeedBack)
   // optional .abb.egm.EgmJoints joints = 1;
   if (has_joints()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
@@ -4000,12 +3796,10 @@ void EgmFeedBack::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:abb.egm.EgmFeedBack)
 }
 
 ::google::protobuf::uint8* EgmFeedBack::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:abb.egm.EgmFeedBack)
   // optional .abb.egm.EgmJoints joints = 1;
   if (has_joints()) {
     target = ::google::protobuf::internal::WireFormatLite::
@@ -4031,7 +3825,6 @@ void EgmFeedBack::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:abb.egm.EgmFeedBack)
   return target;
 }
 
@@ -4172,7 +3965,6 @@ const int EgmMotorState::kStateFieldNumber;
 EgmMotorState::EgmMotorState()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:abb.egm.EgmMotorState)
 }
 
 void EgmMotorState::InitAsDefaultInstance() {
@@ -4182,7 +3974,6 @@ EgmMotorState::EgmMotorState(const EgmMotorState& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:abb.egm.EgmMotorState)
 }
 
 void EgmMotorState::SharedCtor() {
@@ -4192,7 +3983,6 @@ void EgmMotorState::SharedCtor() {
 }
 
 EgmMotorState::~EgmMotorState() {
-  // @@protoc_insertion_point(destructor:abb.egm.EgmMotorState)
   SharedDtor();
 }
 
@@ -4223,24 +4013,23 @@ EgmMotorState* EgmMotorState::New() const {
 }
 
 void EgmMotorState::Clear() {
-  state_ = 0;
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    state_ = 0;
+  }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
 
 bool EgmMotorState::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:abb.egm.EgmMotorState)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
+  while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required .abb.egm.EgmMotorState.MotorStateType state = 1;
       case 1: {
-        if (tag == 8) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
@@ -4251,18 +4040,17 @@ bool EgmMotorState::MergePartialFromCodedStream(
             mutable_unknown_fields()->AddVarint(1, value);
           }
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
-        if (input->ExpectAtEnd()) goto success;
+        if (input->ExpectAtEnd()) return true;
         break;
       }
 
       default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
+          return true;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -4270,18 +4058,12 @@ bool EgmMotorState::MergePartialFromCodedStream(
       }
     }
   }
-success:
-  // @@protoc_insertion_point(parse_success:abb.egm.EgmMotorState)
   return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:abb.egm.EgmMotorState)
-  return false;
 #undef DO_
 }
 
 void EgmMotorState::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:abb.egm.EgmMotorState)
   // required .abb.egm.EgmMotorState.MotorStateType state = 1;
   if (has_state()) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
@@ -4292,12 +4074,10 @@ void EgmMotorState::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:abb.egm.EgmMotorState)
 }
 
 ::google::protobuf::uint8* EgmMotorState::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:abb.egm.EgmMotorState)
   // required .abb.egm.EgmMotorState.MotorStateType state = 1;
   if (has_state()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
@@ -4308,7 +4088,6 @@ void EgmMotorState::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:abb.egm.EgmMotorState)
   return target;
 }
 
@@ -4426,7 +4205,6 @@ const int EgmMCIState::kStateFieldNumber;
 EgmMCIState::EgmMCIState()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:abb.egm.EgmMCIState)
 }
 
 void EgmMCIState::InitAsDefaultInstance() {
@@ -4436,7 +4214,6 @@ EgmMCIState::EgmMCIState(const EgmMCIState& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:abb.egm.EgmMCIState)
 }
 
 void EgmMCIState::SharedCtor() {
@@ -4446,7 +4223,6 @@ void EgmMCIState::SharedCtor() {
 }
 
 EgmMCIState::~EgmMCIState() {
-  // @@protoc_insertion_point(destructor:abb.egm.EgmMCIState)
   SharedDtor();
 }
 
@@ -4477,24 +4253,23 @@ EgmMCIState* EgmMCIState::New() const {
 }
 
 void EgmMCIState::Clear() {
-  state_ = 0;
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    state_ = 0;
+  }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
 
 bool EgmMCIState::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:abb.egm.EgmMCIState)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
+  while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required .abb.egm.EgmMCIState.MCIStateType state = 1 [default = MCI_UNDEFINED];
       case 1: {
-        if (tag == 8) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
@@ -4505,18 +4280,17 @@ bool EgmMCIState::MergePartialFromCodedStream(
             mutable_unknown_fields()->AddVarint(1, value);
           }
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
-        if (input->ExpectAtEnd()) goto success;
+        if (input->ExpectAtEnd()) return true;
         break;
       }
 
       default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
+          return true;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -4524,18 +4298,12 @@ bool EgmMCIState::MergePartialFromCodedStream(
       }
     }
   }
-success:
-  // @@protoc_insertion_point(parse_success:abb.egm.EgmMCIState)
   return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:abb.egm.EgmMCIState)
-  return false;
 #undef DO_
 }
 
 void EgmMCIState::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:abb.egm.EgmMCIState)
   // required .abb.egm.EgmMCIState.MCIStateType state = 1 [default = MCI_UNDEFINED];
   if (has_state()) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
@@ -4546,12 +4314,10 @@ void EgmMCIState::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:abb.egm.EgmMCIState)
 }
 
 ::google::protobuf::uint8* EgmMCIState::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:abb.egm.EgmMCIState)
   // required .abb.egm.EgmMCIState.MCIStateType state = 1 [default = MCI_UNDEFINED];
   if (has_state()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
@@ -4562,7 +4328,6 @@ void EgmMCIState::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:abb.egm.EgmMCIState)
   return target;
 }
 
@@ -4678,7 +4443,6 @@ const int EgmRapidCtrlExecState::kStateFieldNumber;
 EgmRapidCtrlExecState::EgmRapidCtrlExecState()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:abb.egm.EgmRapidCtrlExecState)
 }
 
 void EgmRapidCtrlExecState::InitAsDefaultInstance() {
@@ -4688,7 +4452,6 @@ EgmRapidCtrlExecState::EgmRapidCtrlExecState(const EgmRapidCtrlExecState& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:abb.egm.EgmRapidCtrlExecState)
 }
 
 void EgmRapidCtrlExecState::SharedCtor() {
@@ -4698,7 +4461,6 @@ void EgmRapidCtrlExecState::SharedCtor() {
 }
 
 EgmRapidCtrlExecState::~EgmRapidCtrlExecState() {
-  // @@protoc_insertion_point(destructor:abb.egm.EgmRapidCtrlExecState)
   SharedDtor();
 }
 
@@ -4729,24 +4491,23 @@ EgmRapidCtrlExecState* EgmRapidCtrlExecState::New() const {
 }
 
 void EgmRapidCtrlExecState::Clear() {
-  state_ = 0;
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    state_ = 0;
+  }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
 
 bool EgmRapidCtrlExecState::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:abb.egm.EgmRapidCtrlExecState)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
+  while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required .abb.egm.EgmRapidCtrlExecState.RapidCtrlExecStateType state = 1 [default = RAPID_UNDEFINED];
       case 1: {
-        if (tag == 8) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
@@ -4757,18 +4518,17 @@ bool EgmRapidCtrlExecState::MergePartialFromCodedStream(
             mutable_unknown_fields()->AddVarint(1, value);
           }
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
-        if (input->ExpectAtEnd()) goto success;
+        if (input->ExpectAtEnd()) return true;
         break;
       }
 
       default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
+          return true;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -4776,18 +4536,12 @@ bool EgmRapidCtrlExecState::MergePartialFromCodedStream(
       }
     }
   }
-success:
-  // @@protoc_insertion_point(parse_success:abb.egm.EgmRapidCtrlExecState)
   return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:abb.egm.EgmRapidCtrlExecState)
-  return false;
 #undef DO_
 }
 
 void EgmRapidCtrlExecState::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:abb.egm.EgmRapidCtrlExecState)
   // required .abb.egm.EgmRapidCtrlExecState.RapidCtrlExecStateType state = 1 [default = RAPID_UNDEFINED];
   if (has_state()) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
@@ -4798,12 +4552,10 @@ void EgmRapidCtrlExecState::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:abb.egm.EgmRapidCtrlExecState)
 }
 
 ::google::protobuf::uint8* EgmRapidCtrlExecState::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:abb.egm.EgmRapidCtrlExecState)
   // required .abb.egm.EgmRapidCtrlExecState.RapidCtrlExecStateType state = 1 [default = RAPID_UNDEFINED];
   if (has_state()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
@@ -4814,7 +4566,6 @@ void EgmRapidCtrlExecState::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:abb.egm.EgmRapidCtrlExecState)
   return target;
 }
 
@@ -4907,7 +4658,6 @@ const int EgmTestSignals::kSignalsFieldNumber;
 EgmTestSignals::EgmTestSignals()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:abb.egm.EgmTestSignals)
 }
 
 void EgmTestSignals::InitAsDefaultInstance() {
@@ -4917,7 +4667,6 @@ EgmTestSignals::EgmTestSignals(const EgmTestSignals& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:abb.egm.EgmTestSignals)
 }
 
 void EgmTestSignals::SharedCtor() {
@@ -4926,7 +4675,6 @@ void EgmTestSignals::SharedCtor() {
 }
 
 EgmTestSignals::~EgmTestSignals() {
-  // @@protoc_insertion_point(destructor:abb.egm.EgmTestSignals)
   SharedDtor();
 }
 
@@ -4964,39 +4712,37 @@ void EgmTestSignals::Clear() {
 
 bool EgmTestSignals::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:abb.egm.EgmTestSignals)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
+  while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // repeated double signals = 1;
       case 1: {
-        if (tag == 9) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
          parse_signals:
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  1, 9, input, this->mutable_signals())));
-        } else if (tag == 10) {
+        } else if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag)
+                   == ::google::protobuf::internal::WireFormatLite::
+                      WIRETYPE_LENGTH_DELIMITED) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitiveNoInline<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, this->mutable_signals())));
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(9)) goto parse_signals;
-        if (input->ExpectAtEnd()) goto success;
+        if (input->ExpectAtEnd()) return true;
         break;
       }
 
       default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
+          return true;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -5004,18 +4750,12 @@ bool EgmTestSignals::MergePartialFromCodedStream(
       }
     }
   }
-success:
-  // @@protoc_insertion_point(parse_success:abb.egm.EgmTestSignals)
   return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:abb.egm.EgmTestSignals)
-  return false;
 #undef DO_
 }
 
 void EgmTestSignals::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:abb.egm.EgmTestSignals)
   // repeated double signals = 1;
   for (int i = 0; i < this->signals_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteDouble(
@@ -5026,12 +4766,10 @@ void EgmTestSignals::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:abb.egm.EgmTestSignals)
 }
 
 ::google::protobuf::uint8* EgmTestSignals::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:abb.egm.EgmTestSignals)
   // repeated double signals = 1;
   for (int i = 0; i < this->signals_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
@@ -5042,7 +4780,6 @@ void EgmTestSignals::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:abb.egm.EgmTestSignals)
   return target;
 }
 
@@ -5136,7 +4873,6 @@ const int EgmRobot::kRapidExecStateFieldNumber;
 EgmRobot::EgmRobot()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:abb.egm.EgmRobot)
 }
 
 void EgmRobot::InitAsDefaultInstance() {
@@ -5153,7 +4889,6 @@ EgmRobot::EgmRobot(const EgmRobot& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:abb.egm.EgmRobot)
 }
 
 void EgmRobot::SharedCtor() {
@@ -5170,7 +4905,6 @@ void EgmRobot::SharedCtor() {
 }
 
 EgmRobot::~EgmRobot() {
-  // @@protoc_insertion_point(destructor:abb.egm.EgmRobot)
   SharedDtor();
 }
 
@@ -5208,7 +4942,7 @@ EgmRobot* EgmRobot::New() const {
 }
 
 void EgmRobot::Clear() {
-  if (_has_bits_[0 / 32] & 255) {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (has_header()) {
       if (header_ != NULL) header_->::abb::egm::EgmHeader::Clear();
     }
@@ -5238,21 +4972,18 @@ void EgmRobot::Clear() {
 
 bool EgmRobot::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:abb.egm.EgmRobot)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
+  while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // optional .abb.egm.EgmHeader header = 1;
       case 1: {
-        if (tag == 10) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_header()));
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(18)) goto parse_feedBack;
         break;
@@ -5260,12 +4991,13 @@ bool EgmRobot::MergePartialFromCodedStream(
 
       // optional .abb.egm.EgmFeedBack feedBack = 2;
       case 2: {
-        if (tag == 18) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_feedBack:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_feedback()));
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(26)) goto parse_planned;
         break;
@@ -5273,12 +5005,13 @@ bool EgmRobot::MergePartialFromCodedStream(
 
       // optional .abb.egm.EgmPlanned planned = 3;
       case 3: {
-        if (tag == 26) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_planned:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_planned()));
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(34)) goto parse_motorState;
         break;
@@ -5286,12 +5019,13 @@ bool EgmRobot::MergePartialFromCodedStream(
 
       // optional .abb.egm.EgmMotorState motorState = 4;
       case 4: {
-        if (tag == 34) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_motorState:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_motorstate()));
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(42)) goto parse_mciState;
         break;
@@ -5299,12 +5033,13 @@ bool EgmRobot::MergePartialFromCodedStream(
 
       // optional .abb.egm.EgmMCIState mciState = 5;
       case 5: {
-        if (tag == 42) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_mciState:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_mcistate()));
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(48)) goto parse_mciConvergenceMet;
         break;
@@ -5312,14 +5047,15 @@ bool EgmRobot::MergePartialFromCodedStream(
 
       // optional bool mciConvergenceMet = 6;
       case 6: {
-        if (tag == 48) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_mciConvergenceMet:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
                  input, &mciconvergencemet_)));
           set_has_mciconvergencemet();
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(58)) goto parse_testSignals;
         break;
@@ -5327,12 +5063,13 @@ bool EgmRobot::MergePartialFromCodedStream(
 
       // optional .abb.egm.EgmTestSignals testSignals = 7;
       case 7: {
-        if (tag == 58) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_testSignals:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_testsignals()));
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(66)) goto parse_rapidExecState;
         break;
@@ -5340,23 +5077,23 @@ bool EgmRobot::MergePartialFromCodedStream(
 
       // optional .abb.egm.EgmRapidCtrlExecState rapidExecState = 8;
       case 8: {
-        if (tag == 66) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_rapidExecState:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_rapidexecstate()));
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
-        if (input->ExpectAtEnd()) goto success;
+        if (input->ExpectAtEnd()) return true;
         break;
       }
 
       default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
+          return true;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -5364,18 +5101,12 @@ bool EgmRobot::MergePartialFromCodedStream(
       }
     }
   }
-success:
-  // @@protoc_insertion_point(parse_success:abb.egm.EgmRobot)
   return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:abb.egm.EgmRobot)
-  return false;
 #undef DO_
 }
 
 void EgmRobot::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:abb.egm.EgmRobot)
   // optional .abb.egm.EgmHeader header = 1;
   if (has_header()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
@@ -5427,12 +5158,10 @@ void EgmRobot::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:abb.egm.EgmRobot)
 }
 
 ::google::protobuf::uint8* EgmRobot::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:abb.egm.EgmRobot)
   // optional .abb.egm.EgmHeader header = 1;
   if (has_header()) {
     target = ::google::protobuf::internal::WireFormatLite::
@@ -5491,7 +5220,6 @@ void EgmRobot::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:abb.egm.EgmRobot)
   return target;
 }
 
@@ -5676,7 +5404,6 @@ const int EgmSensor::kSpeedRefFieldNumber;
 EgmSensor::EgmSensor()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:abb.egm.EgmSensor)
 }
 
 void EgmSensor::InitAsDefaultInstance() {
@@ -5689,7 +5416,6 @@ EgmSensor::EgmSensor(const EgmSensor& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:abb.egm.EgmSensor)
 }
 
 void EgmSensor::SharedCtor() {
@@ -5701,7 +5427,6 @@ void EgmSensor::SharedCtor() {
 }
 
 EgmSensor::~EgmSensor() {
-  // @@protoc_insertion_point(destructor:abb.egm.EgmSensor)
   SharedDtor();
 }
 
@@ -5735,7 +5460,7 @@ EgmSensor* EgmSensor::New() const {
 }
 
 void EgmSensor::Clear() {
-  if (_has_bits_[0 / 32] & 7) {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (has_header()) {
       if (header_ != NULL) header_->::abb::egm::EgmHeader::Clear();
     }
@@ -5752,21 +5477,18 @@ void EgmSensor::Clear() {
 
 bool EgmSensor::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:abb.egm.EgmSensor)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
+  while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // optional .abb.egm.EgmHeader header = 1;
       case 1: {
-        if (tag == 10) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_header()));
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(18)) goto parse_planned;
         break;
@@ -5774,12 +5496,13 @@ bool EgmSensor::MergePartialFromCodedStream(
 
       // optional .abb.egm.EgmPlanned planned = 2;
       case 2: {
-        if (tag == 18) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_planned:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_planned()));
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(26)) goto parse_speedRef;
         break;
@@ -5787,23 +5510,23 @@ bool EgmSensor::MergePartialFromCodedStream(
 
       // optional .abb.egm.EgmSpeedRef speedRef = 3;
       case 3: {
-        if (tag == 26) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_speedRef:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_speedref()));
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
-        if (input->ExpectAtEnd()) goto success;
+        if (input->ExpectAtEnd()) return true;
         break;
       }
 
       default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
+          return true;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -5811,18 +5534,12 @@ bool EgmSensor::MergePartialFromCodedStream(
       }
     }
   }
-success:
-  // @@protoc_insertion_point(parse_success:abb.egm.EgmSensor)
   return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:abb.egm.EgmSensor)
-  return false;
 #undef DO_
 }
 
 void EgmSensor::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:abb.egm.EgmSensor)
   // optional .abb.egm.EgmHeader header = 1;
   if (has_header()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
@@ -5845,12 +5562,10 @@ void EgmSensor::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:abb.egm.EgmSensor)
 }
 
 ::google::protobuf::uint8* EgmSensor::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:abb.egm.EgmSensor)
   // optional .abb.egm.EgmHeader header = 1;
   if (has_header()) {
     target = ::google::protobuf::internal::WireFormatLite::
@@ -5876,7 +5591,6 @@ void EgmSensor::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:abb.egm.EgmSensor)
   return target;
 }
 
@@ -5995,7 +5709,6 @@ const int EgmSensorPathCorr::kPathCorrFieldNumber;
 EgmSensorPathCorr::EgmSensorPathCorr()
   : ::google::protobuf::Message() {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:abb.egm.EgmSensorPathCorr)
 }
 
 void EgmSensorPathCorr::InitAsDefaultInstance() {
@@ -6007,7 +5720,6 @@ EgmSensorPathCorr::EgmSensorPathCorr(const EgmSensorPathCorr& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:abb.egm.EgmSensorPathCorr)
 }
 
 void EgmSensorPathCorr::SharedCtor() {
@@ -6018,7 +5730,6 @@ void EgmSensorPathCorr::SharedCtor() {
 }
 
 EgmSensorPathCorr::~EgmSensorPathCorr() {
-  // @@protoc_insertion_point(destructor:abb.egm.EgmSensorPathCorr)
   SharedDtor();
 }
 
@@ -6051,7 +5762,7 @@ EgmSensorPathCorr* EgmSensorPathCorr::New() const {
 }
 
 void EgmSensorPathCorr::Clear() {
-  if (_has_bits_[0 / 32] & 3) {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (has_header()) {
       if (header_ != NULL) header_->::abb::egm::EgmHeader::Clear();
     }
@@ -6065,21 +5776,18 @@ void EgmSensorPathCorr::Clear() {
 
 bool EgmSensorPathCorr::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:abb.egm.EgmSensorPathCorr)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
+  while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // optional .abb.egm.EgmHeader header = 1;
       case 1: {
-        if (tag == 10) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_header()));
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
         if (input->ExpectTag(18)) goto parse_pathCorr;
         break;
@@ -6087,23 +5795,23 @@ bool EgmSensorPathCorr::MergePartialFromCodedStream(
 
       // optional .abb.egm.EgmPathCorr pathCorr = 2;
       case 2: {
-        if (tag == 18) {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_pathCorr:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_pathcorr()));
         } else {
-          goto handle_unusual;
+          goto handle_uninterpreted;
         }
-        if (input->ExpectAtEnd()) goto success;
+        if (input->ExpectAtEnd()) return true;
         break;
       }
 
       default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
+          return true;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -6111,18 +5819,12 @@ bool EgmSensorPathCorr::MergePartialFromCodedStream(
       }
     }
   }
-success:
-  // @@protoc_insertion_point(parse_success:abb.egm.EgmSensorPathCorr)
   return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:abb.egm.EgmSensorPathCorr)
-  return false;
 #undef DO_
 }
 
 void EgmSensorPathCorr::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:abb.egm.EgmSensorPathCorr)
   // optional .abb.egm.EgmHeader header = 1;
   if (has_header()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
@@ -6139,12 +5841,10 @@ void EgmSensorPathCorr::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
-  // @@protoc_insertion_point(serialize_end:abb.egm.EgmSensorPathCorr)
 }
 
 ::google::protobuf::uint8* EgmSensorPathCorr::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:abb.egm.EgmSensorPathCorr)
   // optional .abb.egm.EgmHeader header = 1;
   if (has_header()) {
     target = ::google::protobuf::internal::WireFormatLite::
@@ -6163,7 +5863,6 @@ void EgmSensorPathCorr::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:abb.egm.EgmSensorPathCorr)
   return target;
 }
 

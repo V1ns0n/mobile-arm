@@ -15,7 +15,7 @@ CXX           = g++
 DEFINES       = 
 CFLAGS        = -pipe -g -Wall -W -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -g -std=c++0x -Wall -W -fPIC $(DEFINES)
-INCPATH       = -I../EgmtestSever -I. -I/usr/local/include -I../../../Qt/5.5/gcc_64/mkspecs/linux-g++
+INCPATH       = -I../EgmtestSever -I. -I/usr/lib/x86_64-linux-gnu -I../../../Qt/5.5/gcc_64/mkspecs/linux-g++
 QMAKE         = /home/v1ns0n/Qt/5.5/gcc_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -36,7 +36,7 @@ DISTNAME      = EgmtestSever1.0.0
 DISTDIR = /home/v1ns0n/mobile-arm/qt-ws/EgmtestSever_debug/.tmp/EgmtestSever1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-rpath,/home/v1ns0n/Qt/5.5/gcc_64
-LIBS          = $(SUBLIBS) -L/home/v1ns0n/mobile-arm/qt-ws/EgmtestSever/../../../../../usr/local/lib/ -lprotobuf 
+LIBS          = $(SUBLIBS) -L/home/v1ns0n/mobile-arm/qt-ws/EgmtestSever/../../../../../usr/lib/x86_64-linux-gnu/ -lprotobuf 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -210,7 +210,7 @@ first: all
 
 ####### Build rules
 
-$(TARGET): /home/v1ns0n/mobile-arm/qt-ws/EgmtestSever/../../../../../usr/local/lib/libprotobuf.a $(OBJECTS)  
+$(TARGET): /home/v1ns0n/mobile-arm/qt-ws/EgmtestSever/../../../../../usr/lib/x86_64-linux-gnu/libprotobuf.a $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: ../EgmtestSever/EgmtestSever.pro ../../../Qt/5.5/gcc_64/mkspecs/linux-g++/qmake.conf ../../../Qt/5.5/gcc_64/mkspecs/features/spec_pre.prf \
@@ -514,69 +514,10 @@ compiler_clean:
 
 ####### Compile
 
-main.o: ../EgmtestSever/main.cpp ../EgmtestSever/egm.pb.h \
-		/usr/local/include/google/protobuf/stubs/common.h \
-		/usr/local/include/google/protobuf/generated_message_util.h \
-		/usr/local/include/google/protobuf/stubs/once.h \
-		/usr/local/include/google/protobuf/stubs/atomicops.h \
-		/usr/local/include/google/protobuf/stubs/platform_macros.h \
-		/usr/local/include/google/protobuf/stubs/atomicops_internals_tsan.h \
-		/usr/local/include/google/protobuf/stubs/atomicops_internals_x86_msvc.h \
-		/usr/local/include/google/protobuf/stubs/atomicops_internals_solaris.h \
-		/usr/local/include/google/protobuf/stubs/atomicops_internals_macosx.h \
-		/usr/local/include/google/protobuf/stubs/atomicops_internals_x86_gcc.h \
-		/usr/local/include/google/protobuf/stubs/atomicops_internals_arm_gcc.h \
-		/usr/local/include/google/protobuf/stubs/atomicops_internals_arm64_gcc.h \
-		/usr/local/include/google/protobuf/stubs/atomicops_internals_arm_qnx.h \
-		/usr/local/include/google/protobuf/stubs/atomicops_internals_mips_gcc.h \
-		/usr/local/include/google/protobuf/stubs/atomicops_internals_pnacl.h \
-		/usr/local/include/google/protobuf/stubs/atomicops_internals_generic_gcc.h \
-		/usr/local/include/google/protobuf/stubs/atomicops_internals_atomicword_compat.h \
-		/usr/local/include/google/protobuf/message.h \
-		/usr/local/include/google/protobuf/message_lite.h \
-		/usr/local/include/google/protobuf/descriptor.h \
-		/usr/local/include/google/protobuf/repeated_field.h \
-		/usr/local/include/google/protobuf/stubs/type_traits.h \
-		/usr/local/include/google/protobuf/stubs/template_util.h \
-		/usr/local/include/google/protobuf/extension_set.h \
-		/usr/local/include/google/protobuf/generated_enum_reflection.h \
-		/usr/local/include/google/protobuf/unknown_field_set.h
+main.o: ../EgmtestSever/main.cpp ../EgmtestSever/egm.pb.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../EgmtestSever/main.cpp
 
-egm.pb.o: ../EgmtestSever/egm.pb.cc ../EgmtestSever/egm.pb.h \
-		/usr/local/include/google/protobuf/stubs/common.h \
-		/usr/local/include/google/protobuf/generated_message_util.h \
-		/usr/local/include/google/protobuf/stubs/once.h \
-		/usr/local/include/google/protobuf/stubs/atomicops.h \
-		/usr/local/include/google/protobuf/stubs/platform_macros.h \
-		/usr/local/include/google/protobuf/stubs/atomicops_internals_tsan.h \
-		/usr/local/include/google/protobuf/stubs/atomicops_internals_x86_msvc.h \
-		/usr/local/include/google/protobuf/stubs/atomicops_internals_solaris.h \
-		/usr/local/include/google/protobuf/stubs/atomicops_internals_macosx.h \
-		/usr/local/include/google/protobuf/stubs/atomicops_internals_x86_gcc.h \
-		/usr/local/include/google/protobuf/stubs/atomicops_internals_arm_gcc.h \
-		/usr/local/include/google/protobuf/stubs/atomicops_internals_arm64_gcc.h \
-		/usr/local/include/google/protobuf/stubs/atomicops_internals_arm_qnx.h \
-		/usr/local/include/google/protobuf/stubs/atomicops_internals_mips_gcc.h \
-		/usr/local/include/google/protobuf/stubs/atomicops_internals_pnacl.h \
-		/usr/local/include/google/protobuf/stubs/atomicops_internals_generic_gcc.h \
-		/usr/local/include/google/protobuf/stubs/atomicops_internals_atomicword_compat.h \
-		/usr/local/include/google/protobuf/message.h \
-		/usr/local/include/google/protobuf/message_lite.h \
-		/usr/local/include/google/protobuf/descriptor.h \
-		/usr/local/include/google/protobuf/repeated_field.h \
-		/usr/local/include/google/protobuf/stubs/type_traits.h \
-		/usr/local/include/google/protobuf/stubs/template_util.h \
-		/usr/local/include/google/protobuf/extension_set.h \
-		/usr/local/include/google/protobuf/generated_enum_reflection.h \
-		/usr/local/include/google/protobuf/unknown_field_set.h \
-		/usr/local/include/google/protobuf/io/coded_stream.h \
-		/usr/local/include/google/protobuf/wire_format_lite_inl.h \
-		/usr/local/include/google/protobuf/wire_format_lite.h \
-		/usr/local/include/google/protobuf/generated_message_reflection.h \
-		/usr/local/include/google/protobuf/reflection_ops.h \
-		/usr/local/include/google/protobuf/wire_format.h \
-		/usr/local/include/google/protobuf/descriptor.pb.h
+egm.pb.o: ../EgmtestSever/egm.pb.cc ../EgmtestSever/egm.pb.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o egm.pb.o ../EgmtestSever/egm.pb.cc
 
 ####### Install
