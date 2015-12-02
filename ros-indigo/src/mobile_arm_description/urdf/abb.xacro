@@ -1,0 +1,43 @@
+<robot name="test">
+	<link name="base_link">	
+		<visual>
+			<geometry>
+				<mesh filename="package://mobile_arm_description/meshes/visual/mobilebase.STL"/>
+			</geometry>
+			<origin rpy="0 0 0" xyz="0 0 0"/>
+		</visual>
+		<collision>
+			<geometry>
+				<mesh filename="package://mobile_arm_description/meshes/collision/mobilebasemesh.stl"/>
+			</geometry>
+			<origin rpy="0 0 0" xyz="0 0 0"/>
+		</collision>
+		<inertial>
+			<origin rpy="0 0 0" xyz="0.000318 -0.000046 0.337920"/>
+		   	 <mass value="1"/>
+		    <inertia ixx="0.061646" ixy="0.006101" ixz="0.000004" iyy="0.113693" iyz="-0.000001" izz="0.123984"/>		
+		</inertial>
+	</link>
+	<link name="link1"/>
+	<link name="world"/>
+	<joint name="joint1" type="revolute">
+		<axis xyz="0 0 1"/>
+		<limit effort="1000.0" lower="-2.0" upper="2.0" velocity="4.0"/>
+		<child link="base_link"/>
+		<parent link="link1"/>
+		<origin xyz="0 0 1" rpy="0 0 0"/>
+	</joint>
+	<joint name="joint0" type="fixed">
+		<child link="link1"/>
+		<parent link="world"/>
+	<origin xyz="0 0 0" rpy="0 0 0"/>
+	</joint>
+	<!--joint name="joint1" type="fixed">
+		<child link="base_link"/>
+		<parent link="link1"/>
+	<origin xyz="0 0 0" rpy="0 0 0"/>
+	</joint-->
+	<gazebo>
+		<static>true</static>
+	</gazebo>
+</robot>

@@ -7,6 +7,12 @@
 # new environment variables
 
 # modified environment variables
-export LD_LIBRARY_PATH="/home/v1ns0n/mobile-arm/ros-indigo/devel/lib/x86_64-linux-gnu:/home/v1ns0n/catkin_ws/devel/lib/x86_64-linux-gnu:/opt/ros/indigo/lib/x86_64-linux-gnu:/home/v1ns0n/mobile-arm/ros-indigo/devel/lib:/home/v1ns0n/catkin_ws/devel/lib:/opt/ros/indigo/lib"
-export PKG_CONFIG_PATH="/home/v1ns0n/mobile-arm/ros-indigo/devel/lib/x86_64-linux-gnu/pkgconfig:/home/v1ns0n/catkin_ws/devel/lib/x86_64-linux-gnu/pkgconfig:/opt/ros/indigo/lib/x86_64-linux-gnu/pkgconfig:/home/v1ns0n/mobile-arm/ros-indigo/devel/lib/pkgconfig:/home/v1ns0n/catkin_ws/devel/lib/pkgconfig:/opt/ros/indigo/lib/pkgconfig"
+export CMAKE_PREFIX_PATH="/home/v1ns0n/mobile-arm/ros-indigo/devel:$CMAKE_PREFIX_PATH"
+export CPATH="/home/v1ns0n/mobile-arm/ros-indigo/devel/include:$CPATH"
+export LD_LIBRARY_PATH="/home/v1ns0n/mobile-arm/ros-indigo/devel/lib:/home/v1ns0n/mobile-arm/ros-indigo/devel/lib/x86_64-linux-gnu:/opt/ros/indigo/lib/x86_64-linux-gnu:/opt/ros/indigo/lib"
+export PATH="/home/v1ns0n/mobile-arm/ros-indigo/devel/bin:$PATH"
+export PKG_CONFIG_PATH="/home/v1ns0n/mobile-arm/ros-indigo/devel/lib/pkgconfig:/home/v1ns0n/mobile-arm/ros-indigo/devel/lib/x86_64-linux-gnu/pkgconfig:/opt/ros/indigo/lib/x86_64-linux-gnu/pkgconfig:/opt/ros/indigo/lib/pkgconfig"
 export PWD="/home/v1ns0n/mobile-arm/ros-indigo/build"
+export PYTHONPATH="/home/v1ns0n/mobile-arm/ros-indigo/devel/lib/python2.7/dist-packages:$PYTHONPATH"
+export ROSLISP_PACKAGE_DIRECTORIES="/home/v1ns0n/mobile-arm/ros-indigo/devel/share/common-lisp"
+export ROS_PACKAGE_PATH="/home/v1ns0n/mobile-arm/ros-indigo/src:$ROS_PACKAGE_PATH"

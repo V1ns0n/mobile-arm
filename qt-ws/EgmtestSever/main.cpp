@@ -123,7 +123,7 @@ int main()
   DisplayRobotMessage(pRobotMessage);
   delete pRobotMessage;*/
    int count=60;
-   double pose[3]={1000,0,0};
+   double pose[3]={100,0,0};
  //while(count>0)
  //{
        string messageBuffer;

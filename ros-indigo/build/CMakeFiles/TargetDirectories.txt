@@ -1,4 +1,5 @@
 /home/v1ns0n/mobile-arm/ros-indigo/build/CMakeFiles/clean_test_results.dir
+/home/v1ns0n/mobile-arm/ros-indigo/build/CMakeFiles/clean_test_results_Project.dir
 /home/v1ns0n/mobile-arm/ros-indigo/build/CMakeFiles/download_extra_data.dir
 /home/v1ns0n/mobile-arm/ros-indigo/build/CMakeFiles/doxygen.dir
 /home/v1ns0n/mobile-arm/ros-indigo/build/gtest/CMakeFiles/gtest.dir

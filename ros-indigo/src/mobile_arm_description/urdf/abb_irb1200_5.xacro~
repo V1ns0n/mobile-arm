@@ -18,7 +18,6 @@
 				<geometry>
 					<mesh filename="${collisionfile}"/>
 				</geometry>
-			<origin rpy="${rpy}" xyz="${xyz}"/>
 			</collision>
 			<xacro:insert_block name="inertial"/>
 		</link>

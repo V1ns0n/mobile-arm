@@ -5,7 +5,7 @@
 <xacro:property name="wheeloffsetX" value="0.38" />
 <xacro:property name="wheeloffsetY" value="0.308" />
 <xacro:property name="wheeloffsetZ" value="0.093" />
-	<xacro:macro name="arm_link" params="name rpy xyz filename collisionfile *material *inertial">
+	<xacro:macro name="arm_link" params="name rpy xyz filename collisionfile *material">
 		<link name="${name}">	
 			<visual>
 				<geometry>
@@ -18,9 +18,7 @@
 				<geometry>
 					<mesh filename="${collisionfile}"/>
 				</geometry>
-			<origin rpy="${rpy}" xyz="${xyz}"/>
 			</collision>
-			<xacro:insert_block name="inertial"/>
 		</link>
 	</xacro:macro>
 
@@ -51,134 +49,74 @@
 
 	<xacro:arm_link name="base_link" rpy="0 0 0" xyz="0 0 0.034" filename="package://mobile_arm_description/meshes/visual/mobilebase.STL" collisionfile="package://mobile_arm_description/meshes/collision/mobilebasemesh.stl">
 		<material name="grey">
-			 <color rgba="0.7 0.7 0.7 1"/>
-	    </material>
-		<inertial>
-			<origin rpy="0 0 0" xyz="0.000318 -0.000046 0.337920"/>
-		   	 <mass value="50"/>
-		    <inertia ixx="0.061646" ixy="0.006101" ixz="0.000004" iyy="0.113693" iyz="-0.000001" izz="0.123984"/>		
-		</inertial>
+	            <color rgba="0.7 0.7 0.7 1"/>
+	        </material>
         </xacro:arm_link>
 
         <xacro:arm_link name="wheelLF" rpy="0 0 0" xyz="0 0 0" filename="package://mobile_arm_description/meshes/visual/wheel.STL" collisionfile="package://mobile_arm_description/meshes/collision/wheelmesh.stl">
 		<material name="black">
-	         <color rgba="0 0 0 1"/>
-	    </material>
-		<inertial>
-			<origin rpy="0 0 0" xyz="0 0 0"/>
-		   	 <mass value="5"/>
-		    <inertia ixx="0.000032" ixy="0" ixz="0" iyy="0.000046" iyz="0" izz="0.000032"/>		
-		</inertial>
+	            <color rgba="0 0 0 1"/>
+	        </material>
         </xacro:arm_link>
 
         <xacro:arm_link name="wheelRF" rpy="0 0 0" xyz="0 0 0" filename="package://mobile_arm_description/meshes/visual/wheel.STL" collisionfile="package://mobile_arm_description/meshes/collision/wheelmesh.stl">
 		<material name="black">
 	            <color rgba="0 0 0 1"/>
 	        </material>
-		<inertial>
-			<origin rpy="0 0 0" xyz="0 0 0"/>
-		   	 <mass value="5"/>
-		    <inertia ixx="0.000032" ixy="0" ixz="0" iyy="0.000046" iyz="0" izz="0.000032"/>		
-		</inertial>
         </xacro:arm_link>
 
         <xacro:arm_link name="wheelLB" rpy="0 0 0" xyz="0 0 0" filename="package://mobile_arm_description/meshes/visual/wheel.STL" collisionfile="package://mobile_arm_description/meshes/collision/wheelmesh.stl">
 		<material name="black">
 	            <color rgba="0 0 0 1"/>
 	        </material>
-		<inertial>
-			<origin rpy="0 0 0" xyz="0 0 0"/>
-		   	 <mass value="5"/>
-		    <inertia ixx="0.000032" ixy="0" ixz="0" iyy="0.000046" iyz="0" izz="0.000032"/>		
-		</inertial>
         </xacro:arm_link>
 
         <xacro:arm_link name="wheelRB" rpy="0 0 0" xyz="0 0 0" filename="package://mobile_arm_description/meshes/visual/wheel.STL" collisionfile="package://mobile_arm_description/meshes/collision/wheelmesh.stl">
 		<material name="black">
 	            <color rgba="0 0 0 1"/>
 	        </material>
-		<inertial>
-			<origin rpy="0 0 0" xyz="0 0 0"/>
-		   	 <mass value="5"/>
-		    <inertia ixx="0.000032" ixy="0" ixz="0" iyy="0.000046" iyz="0" izz="0.000032"/>		
-		</inertial>
         </xacro:arm_link>
 
 	<xacro:arm_link name="link_0" rpy="0 0 0" xyz="0 0 0" filename="package://mobile_arm_description/meshes/visual/IRB1200_7-705-90_IRC5_Base_Standard_rev0.STL" collisionfile="package://mobile_arm_description/meshes/collision/baselink.stl">
 		<material name="orange">
 	            <color rgba="1 0.5 0 1"/>
 	        </material>
-		<inertial>
-			<origin rpy="0 0 0" xyz="-0.028996 0.000593 0.112726"/>
-		   	 <mass value="20"/>
-		    <inertia ixx="0.000093" ixy="0" ixz="0" iyy="0.000128" iyz="0" izz="0.000119"/>		
-		</inertial>
         </xacro:arm_link>
 
 	<xacro:arm_link name="link_1" rpy="0 0 0" xyz="0 0 0" filename="package://mobile_arm_description/meshes/visual/IRB1200_7-705-90_IRC5_Link1_rev0.STL" collisionfile="package://mobile_arm_description/meshes/collision/link1.stl">
 		<material name="orange">
 	            <color rgba="1 0.5 0 1"/>
 	        </material>
-		<inertial>
-			<origin rpy="0 0 0" xyz="0.000928 -0.000663 0.117217"/>
-		   	 <mass value="10"/>
-		    <inertia ixx="0.000103" ixy="0" ixz="0" iyy="0.000085" iyz="0" izz="0.000081"/>		
-		</inertial>
         </xacro:arm_link>
 
 	<xacro:arm_link name="link_2" rpy="0 0 0" xyz="0 0 0" filename="package://mobile_arm_description/meshes/visual/IRB1200_5-90_IRC5_Link2_rev0.STL" collisionfile="package://mobile_arm_description/meshes/collision/link2.stl">
 		<material name="orange">
 	            <color rgba="1 0.5 0 1"/>
 	        </material>
-			<inertial>
-			<origin rpy="0 0 0" xyz="-0.001257 -0.000516 0.250048"/>
-		   	 <mass value="10"/>
-		    <inertia ixx="0.000454" ixy="0" ixz="0" iyy="0.000427" iyz="0" izz="0.000083"/>		
-		</inertial>s
         </xacro:arm_link>
 
 	<xacro:arm_link name="link_3" rpy="0 0 0" xyz="0 0 0" filename="package://mobile_arm_description/meshes/visual/IRB1200_5-90_IRC5_Link3_rev0.STL" collisionfile="package://mobile_arm_description/meshes/collision/link3.stl">
 		<material name="orange">
 	            <color rgba="1 0.5 0 1"/>
 	        </material>
-		<inertial>
-			<origin rpy="0 0 0" xyz="0.099548 0.000983 0.032329"/>
-		   	 <mass value="8"/>
-		    <inertia ixx="0.000023" ixy="0" ixz="0" iyy="0.000083" iyz="0" izz="0.000076"/>		
-		</inertial>
         </xacro:arm_link>
 
 	<xacro:arm_link name="link_4" rpy="0 0 0" xyz="0 0 0" filename="package://mobile_arm_description/meshes/visual/IRB1200_5-90_IRC5_Link4_rev0.STL" collisionfile="package://mobile_arm_description/meshes/collision/link4.stl">
 		<material name="orange">
 	            <color rgba="1 0.5 0 1"/>
 	        </material>
-		<inertial>
-			<origin rpy="0 0 0" xyz="0.093127 0.001252 0.005029"/>
-		   	 <mass value="6"/>
-		    <inertia ixx="0.000005" ixy="0" ixz="0" iyy="0.000011" iyz="0" izz="0.000011"/>		
-		</inertial>
         </xacro:arm_link>
 
 	<xacro:arm_link name="link_5" rpy="0 0 0" xyz="0 0 0" filename="package://mobile_arm_description/meshes/visual/IRB1200_5-90_IRC5_Link5_rev0.STL" collisionfile="package://mobile_arm_description/meshes/collision/link5.stl">
 		<material name="orange">
 	            <color rgba="1 0.5 0 1"/>
 	        </material>
-		<inertial>
-			<origin rpy="0 0 0" xyz="0.018136 -0.001115 0.000001"/>
-		   	 <mass value="4"/>
-		    <inertia ixx="0.000001" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.000001"/>		
-		</inertial>
         </xacro:arm_link>
 
 	<xacro:arm_link name="link_6" rpy="0 0 0" xyz="0 0 0" filename="package://mobile_arm_description/meshes/visual/IRB1200_5-90_IRC5_Link6_rev0.STL" collisionfile="package://mobile_arm_description/meshes/collision/link6.stl">
 		<material name="orange">
 	            <color rgba="1 0.5 0 1"/>
 	        </material>
-		<inertial>
-			<origin rpy="0 0 0" xyz="0.002490 0.000001 0.000001"/>
-		   	 <mass value="1"/>
-		    <inertia ixx="0.000001" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.000001"/>		
-		</inertial>
         </xacro:arm_link>
 
 
@@ -221,9 +159,5 @@
 	<xacro:wheel_joint name="wheelRFJ" type="continuous" o_xyz="${wheeloffsetX} -${wheeloffsetY} ${wheeloffsetZ}" o_rpy="0 0 0" a_xyz="0 1 0" effort="1000.0" velocity="15" p_link="base_link" c_link="wheelRF"/>	
 
 	<xacro:wheel_joint name="wheelRBJ" type="continuous" o_xyz="-${wheeloffsetX} -${wheeloffsetY} ${wheeloffsetZ}" o_rpy="0 0 0" a_xyz="0 1 0" effort="1000.0" velocity="15" p_link="base_link" c_link="wheelRB"/>	
-
-<gazebo>
-	<static>true</static>
-</gazebo>
 
 </robot>

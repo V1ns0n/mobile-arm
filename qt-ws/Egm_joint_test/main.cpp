@@ -165,7 +165,7 @@ int main()
        delete pSensorMessage;
        //count--;
        //for(int i=0;i<6;i++)
-           joints[0]+=1;
+           joints[0]+=5;
      sleep(1);
  }
 

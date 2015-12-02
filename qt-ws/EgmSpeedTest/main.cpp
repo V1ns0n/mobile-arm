@@ -134,7 +134,7 @@ int main()
   DisplayRobotMessage(pRobotMessage);
   delete pRobotMessage;*/
    int count=60;
-   double pose[6]={3,3,3,3,3,3};
+   double pose[6]={0.5,0,0,0,0,0};
 while(count>0)
  {
        string messageBuffer;

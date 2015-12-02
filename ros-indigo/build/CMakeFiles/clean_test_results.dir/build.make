@@ -46,7 +46,7 @@ CMAKE_BINARY_DIR = /home/v1ns0n/mobile-arm/ros-indigo/build
 include CMakeFiles/clean_test_results.dir/progress.make
 
 CMakeFiles/clean_test_results:
-	/usr/bin/cmake -E remove_directory /home/v1ns0n/mobile-arm/ros-indigo/build/test_results
+	/usr/bin/python /opt/ros/indigo/share/catkin/cmake/test/remove_test_results.py /home/v1ns0n/mobile-arm/ros-indigo/build/test_results
 
 clean_test_results: CMakeFiles/clean_test_results
 clean_test_results: CMakeFiles/clean_test_results.dir/build.make
